@@ -1,0 +1,11 @@
+{
+  "run_id": "gamma",
+  "parent_run_id": "beta",
+  "branch": "clarity-fork",
+  "gates_passed": 6,
+  "gates_total": 6,
+  "attempt_count": 2,
+  "attempt_statuses": ["NO_FINAL_ANSWER", "SUCCESS"],
+  "first_attempt_usable": false,
+  "recovered_after_retry": true
+}

@@ -1,0 +1,18 @@
+{
+  "run_id": "beta",
+  "parent": "alpha",
+  "status": "active",
+  "evidence": [
+    "src/flask/app.py",
+    "src/flask/wrappers.py",
+    "src/flask/sansio/app.py",
+    "tests/test_user_error_handler.py"
+  ],
+  "verified": [
+    "handle_http_exception passes ctx.request.blueprints to _find_error_handler",
+    "Request.blueprints is empty when URL matching failed",
+    "_find_error_handler searches blueprint names before the application only when blueprint names exist",
+    "test_default_error_handler covers NotFound raised inside a blueprint route but not an unmatched URL under the blueprint prefix"
+  ],
+  "next_action": "Add a bounded /bp/missing assertion to test_default_error_handler and run that single test"
+}

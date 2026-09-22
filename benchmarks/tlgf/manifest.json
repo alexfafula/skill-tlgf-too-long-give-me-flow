@@ -1,0 +1,1175 @@
+{
+  "schema_version": 1,
+  "id": "tlgf-continuity-v2",
+  "skill": {
+    "name": "tlgf",
+    "root": "tlgf",
+    "display_name": "TLGF"
+  },
+  "report": {
+    "title": "TLGF continuity benchmark report",
+    "eyebrow": "Cognitive-continuity A/B benchmark",
+    "control_condition": "control",
+    "treatment_condition": "tlgf"
+  },
+  "conditions": {
+    "control": {
+      "display_name": "Control",
+      "skill_enabled": false,
+      "prompt_suffix": ""
+    },
+    "tlgf": {
+      "display_name": "TLGF",
+      "skill_enabled": true,
+      "prompt_suffix": "\n\nTLGF"
+    }
+  },
+  "cases": [
+    {
+      "id": "standalone-restraint",
+      "mode": "explain",
+      "difficulty": "focused",
+      "fixture": "fixtures/standalone-restraint",
+      "workspace_branch": "benchmark-fixture",
+      "fixture_summary": "No project, run, branch, or persistent lineage exists.",
+      "max_response_words": 120,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "What does idempotent mean in an HTTP API? I'm an experienced application developer who hasn't used the term. One concrete request example.",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "idempotent"
+        ],
+        [
+          "same intended effect",
+          "same intended server-state effect",
+          "same intended server-side effect",
+          "same effect",
+          "same resulting state",
+          "same server state",
+          "same server-side state",
+          "same state"
+        ],
+        [
+          "PUT",
+          "DELETE"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [
+        "Project:",
+        "Lineage:",
+        "You are here:",
+        "What's happening now:",
+        "What’s happening now:",
+        "Suggested next steps:",
+        "TLGF EXEC"
+      ],
+      "orientation_facts": {},
+      "review_criteria": [
+        "Answer the standalone question without inventing project lineage.",
+        "State the repeated-request consequence before adding detail.",
+        "Use one technically accurate HTTP example.",
+        "Stop without adding unrelated method semantics."
+      ],
+      "semantic_facts": [
+        "Repeating an idempotent request leaves the server in the same state as sending it once.",
+        "PUT or DELETE is given as the example, not POST."
+      ],
+      "treatment_forbidden_terms": []
+    },
+    {
+      "id": "run-lineage",
+      "mode": "orient",
+      "difficulty": "continuity",
+      "fixture": "fixtures/run-lineage",
+      "workspace_branch": "clarity-fork",
+      "fixture_summary": "Alpha and beta form the Qwen prompt-only comparison. Gamma uses another model and includes a retry, so it is not part of that comparison.",
+      "max_response_words": 180,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Back on the Qwen prompt v3 versus v2 comparison. Where does it stand and what's next?",
+      "required_paths": [
+        "reports/alpha/summary.json",
+        "reports/beta/summary.json",
+        "reports/gamma/summary.json"
+      ],
+      "required_term_groups": [
+        [
+          "alpha"
+        ],
+        [
+          "beta"
+        ],
+        [
+          "4/6",
+          "4 of 6",
+          "four of six"
+        ],
+        [
+          "5/6",
+          "5 of 6",
+          "five of six"
+        ],
+        [
+          "prompt v2",
+          "v2"
+        ],
+        [
+          "prompt v3",
+          "v3"
+        ],
+        [
+          "gamma"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "80% complete",
+        "83% complete"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "active_run": [
+          "beta"
+        ],
+        "predecessor": [
+          "alpha"
+        ],
+        "next_target": [
+          "resume-cue",
+          "resume cue",
+          "failed gate",
+          "sixth gate"
+        ]
+      },
+      "review_criteria": [
+        "Identify beta as active and alpha as its predecessor for the Qwen prompt-only comparison.",
+        "Keep gamma outside that comparison because it uses Claude and required a retry.",
+        "Bind each score to its run, prompt, and report path.",
+        "Recommend investigating beta's resume-cue failure next."
+      ],
+      "semantic_facts": [
+        "Beta is the active run for the comparison and alpha is its predecessor.",
+        "Gamma uses a different model and required a retry, so it is outside the Qwen prompt comparison.",
+        "The recommended next action is to investigate beta's remaining resume-cue failure."
+      ]
+    },
+    {
+      "id": "park-resume",
+      "mode": "resume",
+      "difficulty": "continuity",
+      "fixture": "fixtures/park-resume",
+      "workspace_branch": "fix/retry",
+      "fixture_summary": "A previous session parked an unfinished retry investigation with an exact stopping point, next action, unresolved hypothesis, and files to reopen.",
+      "max_response_words": 200,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "New session. Pick up the parked retry investigation where it stopped and check the recorded stopping point.",
+      "required_paths": [
+        ".tlgf/STATE.md",
+        "src/retry.ts",
+        "tests/retry.test.ts"
+      ],
+      "required_term_groups": [
+        [
+          "fix/retry"
+        ],
+        [
+          "timeout"
+        ],
+        [
+          "tests/retry.test.ts"
+        ],
+        [
+          "regression",
+          "hypothesis",
+          "unresolved"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "What retry investigation",
+        "Which retry investigation"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "project": [
+          "API client"
+        ],
+        "workstream": [
+          "retry investigation",
+          "retry"
+        ],
+        "branch": [
+          "fix/retry"
+        ],
+        "next_action": [
+          "tests/retry.test.ts"
+        ],
+        "unresolved": [
+          "regression",
+          "hypothesis",
+          "unresolved"
+        ]
+      },
+      "review_criteria": [
+        "Use the PARK cue without asking the user to reconstruct the prior session.",
+        "Verify the timeout branch in src/retry.ts and inspect tests/retry.test.ts.",
+        "Report the missing timeout coverage as evidence while keeping its role in the regression as an unresolved hypothesis.",
+        "Give one next read-only verification action."
+      ],
+      "semantic_facts": [
+        "The timeout branch in src/retry.ts throws immediately and bypasses the backoff.",
+        "tests/retry.test.ts has no test that covers the timeout branch.",
+        "Whether the missing coverage explains the regression is still an unresolved hypothesis, not a conclusion."
+      ]
+    },
+    {
+      "id": "stale-state",
+      "mode": "resume",
+      "difficulty": "continuity",
+      "fixture": "fixtures/stale-state",
+      "workspace_branch": "clarity-fork",
+      "fixture_summary": "The persistent state names beta as active, but the report index and gamma artifact provide newer evidence. Gamma passed after one retry.",
+      "max_response_words": 200,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Where does this benchmark stand? Check the saved state against what's actually in the workspace before trusting it.",
+      "required_paths": [
+        ".tlgf/STATE.md",
+        "reports/index.json",
+        "reports/beta/summary.json",
+        "reports/gamma/summary.json"
+      ],
+      "required_term_groups": [
+        [
+          "beta"
+        ],
+        [
+          "gamma"
+        ],
+        [
+          "stale",
+          "mismatch",
+          "conflict",
+          "outdated",
+          "out of date",
+          "out-of-date",
+          "supersede",
+          "differs",
+          "differ from",
+          "disagree",
+          "no longer",
+          "newer than",
+          "still names"
+        ],
+        [
+          "retry",
+          "second attempt",
+          "two attempts",
+          "NO_FINAL_ANSWER"
+        ],
+        [
+          "first attempt",
+          "first-attempt",
+          "attempt 1",
+          "reliability"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "clean 6/6",
+        "passed 6/6 on the first attempt"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "current_run": [
+          "gamma"
+        ],
+        "predecessor": [
+          "beta"
+        ],
+        "branch": [
+          "clarity-fork"
+        ],
+        "reliability_cost": [
+          "retry",
+          "first attempt",
+          "first-attempt",
+          "attempt 1"
+        ]
+      },
+      "review_criteria": [
+        "Name the mismatch between .tlgf/STATE.md and reports/index.json.",
+        "Treat gamma as current and beta as its predecessor.",
+        "Preserve gamma's first-attempt failure and retry cost.",
+        "Recommend fixing or investigating reliability before presenting an unconditional pass."
+      ],
+      "semantic_facts": [
+        ".tlgf/STATE.md still names beta as active while reports/index.json names gamma.",
+        "Gamma is current and beta is its predecessor.",
+        "Gamma passed only after a retry, so its first-attempt reliability is unresolved."
+      ]
+    },
+    {
+      "id": "useful-signal",
+      "mode": "orient",
+      "difficulty": "discovery",
+      "fixture": "fixtures/useful-signal",
+      "workspace_branch": "analytics-staging",
+      "fixture_summary": "An August data backfill is still running. Its unvalidated preview contains a potentially valuable partner-level conversion signal that should be preserved without interrupting the import or overstating the evidence.",
+      "max_response_words": 200,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": false,
+      "forbids_needs_user_signal": true,
+      "prompt": "The August backfill is running while I work on other things. Quick status?",
+      "required_paths": [
+        ".tlgf/STATE.md",
+        "runs/backfill-2026-08-20/status.json",
+        "runs/backfill-2026-08-20/preview.json",
+        "notes/baseline.md"
+      ],
+      "required_term_groups": [
+        [
+          "backfill-2026-08-20"
+        ],
+        [
+          "72/120",
+          "72 / 120",
+          "72 of 120",
+          "72 out of 120"
+        ],
+        [
+          "partner-north"
+        ],
+        [
+          "18.4%",
+          "0.184"
+        ],
+        [
+          "preliminary",
+          "provisional",
+          "unvalidated",
+          "not validated",
+          "not deduplicated",
+          "validation pending",
+          "not decision-ready"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "stop the import",
+        "proves that partner-north",
+        "validated 18.4%"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "project": [
+          "customer analytics"
+        ],
+        "run": [
+          "backfill-2026-08-20"
+        ],
+        "progress": [
+          "72/120",
+          "72 / 120",
+          "72 of 120",
+          "72 out of 120"
+        ],
+        "signal": [
+          "partner-north"
+        ]
+      },
+      "review_criteria": [
+        "Keep the running backfill as the active thread and identify its exact run and progress.",
+        "Surface partner-north's preliminary conversion rate as a potentially valuable signal relative to the July baseline.",
+        "Preserve the incomplete-shard, checksum, and deduplication limits instead of presenting the preview as a validated conclusion.",
+        "Keep the import running and park or defer the partner investigation until validation rather than creating an immediate context switch."
+      ],
+      "semantic_facts": [
+        "The backfill is still running and should be left to finish.",
+        "partner-north's 18.4% conversion is surfaced as a potentially valuable but preliminary signal against the validated baseline.",
+        "Investigating partner-north is deferred until validation and deduplication complete."
+      ]
+    },
+    {
+      "id": "addressable-expand",
+      "mode": "follow-up",
+      "difficulty": "continuity",
+      "fixture": "fixtures/addressable-flow",
+      "workspace_branch": "tlgf-v2",
+      "fixture_summary": "The latest TLGF frame contains three numbered state points. The user asks to expand only point 2, which records an inconclusive Qwen/OpenCode run.",
+      "max_response_words": 110,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Your previous message in this conversation was the following frame.\n\n**You are here:** TLGF V2 › validation › cross-agent evidence\n\n---\n\n**What's happening now:**\n\n1. The V2 runtime and portable adapters are implemented.\n2. Qwen/OpenCode returned no final answer on its first attempt and timed out on its retry. This is a host-reliability result; it doesn't establish whether TLGF improves or worsens Qwen's writing style.\n3. The Claude output-style adapter is ready but hasn't been forward-tested.\n\n---\n\n**Suggested next steps:**\n\nA. Validate the V2 package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\n---\n\nMy reply: expand 2",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "Qwen",
+          "OpenCode"
+        ],
+        [
+          "no final answer",
+          "NO_FINAL_ANSWER",
+          "without a final answer",
+          "no answer",
+          "empty"
+        ],
+        [
+          "timed out",
+          "timeout"
+        ],
+        [
+          "reliability",
+          "reliable"
+        ],
+        [
+          "style",
+          "writing"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [
+        "V2 runtime and portable adapters",
+        "Claude output-style adapter"
+      ],
+      "treatment_forbidden_terms": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**What’s happening now:**",
+        "**Suggested next steps:**",
+        "file://"
+      ],
+      "orientation_facts": {
+        "selected_point": [
+          "Qwen",
+          "OpenCode"
+        ],
+        "first_attempt": [
+          "no final answer",
+          "NO_FINAL_ANSWER",
+          "without a final answer",
+          "no answer",
+          "empty"
+        ],
+        "retry": [
+          "timed out",
+          "timeout"
+        ]
+      },
+      "review_criteria": [
+        "Resolve point 2 against frame.md without asking what 2 means.",
+        "Explain the first-attempt and retry outcomes as host-reliability evidence.",
+        "Do not infer a writing-style result from an unusable response.",
+        "Do not replay the full TLGF triptych or unrelated points 1 and 3."
+      ],
+      "semantic_facts": [
+        "The Qwen/OpenCode result is a host-reliability outcome, not evidence about writing style.",
+        "Points 1 and 3 are not replayed."
+      ]
+    },
+    {
+      "id": "addressable-action",
+      "mode": "follow-up",
+      "difficulty": "continuity",
+      "fixture": "fixtures/addressable-flow",
+      "workspace_branch": "tlgf-v2",
+      "fixture_summary": "The latest TLGF frame offers three lettered actions. The user selects B with no repeated context.",
+      "max_response_words": 90,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Your previous message in this conversation was the following frame.\n\n**You are here:** TLGF V2 › validation › cross-agent evidence\n\n---\n\n**What's happening now:**\n\n1. The V2 runtime and portable adapters are implemented.\n2. Qwen/OpenCode returned no final answer on its first attempt and timed out on its retry. This is a host-reliability result; it doesn't establish whether TLGF improves or worsens Qwen's writing style.\n3. The Claude output-style adapter is ready but hasn't been forward-tested.\n\n---\n\n**Suggested next steps:**\n\nA. Validate the V2 package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\n---\n\nMy reply: B",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "Qwen"
+        ],
+        [
+          "reliability",
+          "reliable"
+        ],
+        [
+          "style",
+          "writing"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [
+        "Validate the V2 package locally",
+        "Forward-test the Claude adapter"
+      ],
+      "treatment_forbidden_terms": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**What’s happening now:**",
+        "**Suggested next steps:**",
+        "file://"
+      ],
+      "orientation_facts": {
+        "selected_action": [
+          "Qwen"
+        ],
+        "classification": [
+          "reliability",
+          "reliable"
+        ]
+      },
+      "review_criteria": [
+        "Resolve bare B against the latest frame without asking the user to repeat it.",
+        "Classify the Qwen run as a host-reliability result.",
+        "Keep writing-style impact inconclusive.",
+        "Do not replay the full TLGF triptych or mention actions A and C."
+      ],
+      "semantic_facts": [
+        "Bare B is resolved to classifying the Qwen result without asking what B means.",
+        "The Qwen run is classified as a host-reliability result.",
+        "Writing-style impact is left inconclusive.",
+        "Actions A and C are not discussed."
+      ]
+    },
+    {
+      "id": "decision-blocker",
+      "mode": "orient",
+      "difficulty": "decision",
+      "fixture": "fixtures/decision-blocker",
+      "workspace_branch": "release/migration",
+      "fixture_summary": "A migration dry run would overwrite 14 records. Two safe paths remain, and only the release owner can choose between them.",
+      "max_response_words": 160,
+      "max_user_questions": 1,
+      "forbid_unmeasured_percent": true,
+      "requires_needs_user_signal": true,
+      "prompt": "Release status? The migration dry run flagged something. Don't run the migration.",
+      "required_paths": [
+        "dry-run.md"
+      ],
+      "required_term_groups": [
+        [
+          "migration-dry-run-20260821"
+        ],
+        [
+          "14"
+        ],
+        [
+          "overwrite",
+          "overwritten"
+        ],
+        [
+          "repair"
+        ],
+        [
+          "exclude",
+          "excluding"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "⛔ **Needs you**"
+        ],
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "deployment completed",
+        "migration completed",
+        "I chose"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "run": [
+          "migration-dry-run-20260821"
+        ],
+        "impact": [
+          "14"
+        ],
+        "authority": [
+          "release owner",
+          "your decision",
+          "you choose",
+          "you decide",
+          "only you",
+          "Needs you"
+        ]
+      },
+      "review_criteria": [
+        "Put the needs-user signal before the orientation frame.",
+        "State the 14-record impact and recovery boundary without authorizing a write.",
+        "Recommend the safer path first while preserving both owner choices.",
+        "Ask for or clearly route the release owner's decision."
+      ],
+      "semantic_facts": [
+        "Fourteen customer records would be overwritten.",
+        "The operation is reversible only before deployment.",
+        "Only the release owner can choose between repairing first and excluding the records.",
+        "No write or deployment has started."
+      ]
+    },
+    {
+      "id": "park-point",
+      "mode": "follow-up",
+      "difficulty": "continuity",
+      "fixture": "fixtures/useful-signal",
+      "workspace_branch": "analytics-staging",
+      "fixture_summary": "The latest frame reports a running backfill with one preliminary partner-level signal. The user parks that point in a read-only session.",
+      "max_response_words": 90,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": false,
+      "forbids_needs_user_signal": true,
+      "prompt": "Your previous message in this conversation was the following frame.\n\n**You are here:** Customer analytics › August backfill › import running\n\n---\n\n**What's happening now:**\n\n1. The import has completed 72 of 120 shards with no failures.\n2. Validation runs only after the import finishes.\n3. Preliminary: partner-north shows 18.4% conversion in a nondeduplicated preview versus a 6.2% validated baseline.\n\n---\n\n**Suggested next steps:**\n\nA. Let the import finish, then run validation.\n\n---\n\nMy reply: park 3 (read-only session; just tell me what you'd record)",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "partner-north"
+        ],
+        [
+          "revisit",
+          "re-visit",
+          "after validation",
+          "once validated",
+          "when validation",
+          "after deduplication"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [
+        "stop the import",
+        "pause the import"
+      ],
+      "treatment_forbidden_terms": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**What’s happening now:**",
+        "**Suggested next steps:**",
+        "file://"
+      ],
+      "orientation_facts": {
+        "lead": [
+          "partner-north"
+        ],
+        "revisit": [
+          "revisit",
+          "re-visit",
+          "after validation",
+          "once validated",
+          "when validation",
+          "after deduplication"
+        ]
+      },
+      "semantic_facts": [
+        "Point 3 is preserved as an inactive lead with its evidence (18.4% versus the 6.2% baseline) and a revisit condition tied to validation.",
+        "The import stays the active thread and is not interrupted.",
+        "The frame is not replayed."
+      ],
+      "review_criteria": [
+        "Park only point 3 with its smallest supporting evidence and a revisit condition.",
+        "Keep the import running as the active thread.",
+        "Do not replay the triptych or create a new public field."
+      ]
+    },
+    {
+      "id": "refresh-after-action",
+      "mode": "orient",
+      "difficulty": "continuity",
+      "fixture": "fixtures/addressable-flow",
+      "workspace_branch": "tlgf-v2",
+      "fixture_summary": "The latest frame offered three actions. The user completed action A and asks for a refreshed frame.",
+      "max_response_words": 180,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Your previous message in this conversation was the following frame.\n\n**You are here:** TLGF V2 › validation › cross-agent evidence\n\n---\n\n**What's happening now:**\n\n1. The V2 runtime and portable adapters are implemented.\n2. Qwen/OpenCode returned no final answer on its first attempt and timed out on its retry. This is a host-reliability result; it doesn't establish whether TLGF improves or worsens Qwen's writing style.\n3. The Claude output-style adapter is ready but hasn't been forward-tested.\n\n---\n\n**Suggested next steps:**\n\nA. Validate the V2 package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\n---\n\nMy reply: I ran A: python3 tlgf/scripts/check.py printed 'TLGF valid'. refresh",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "valid"
+        ],
+        [
+          "Qwen"
+        ],
+        [
+          "Claude"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [],
+      "treatment_forbidden_terms": [
+        "A. Validate the V2 package locally",
+        "A. Validate the package locally",
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "completed": [
+          "valid"
+        ],
+        "remaining_reliability": [
+          "Qwen"
+        ],
+        "remaining_adapter": [
+          "Claude"
+        ]
+      },
+      "semantic_facts": [
+        "The completed validation is recorded as done, not carried forward as an action.",
+        "Current points are renumbered from 1 and actions relettered from A.",
+        "The Qwen classification and the Claude adapter test remain as the forward path."
+      ],
+      "review_criteria": [
+        "Emit one refreshed triptych with the validation marked complete.",
+        "Renumber points from 1 and reletter actions from A without the resolved item.",
+        "Keep the remaining reliability and adapter work as the path forward."
+      ]
+    },
+    {
+      "id": "compare-b-vs-c",
+      "mode": "follow-up",
+      "difficulty": "continuity",
+      "fixture": "fixtures/addressable-flow",
+      "workspace_branch": "tlgf-v2",
+      "fixture_summary": "The latest frame offered three actions. The user asks only for the material difference between B and C.",
+      "max_response_words": 90,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Your previous message in this conversation was the following frame.\n\n**You are here:** TLGF V2 › validation › cross-agent evidence\n\n---\n\n**What's happening now:**\n\n1. The V2 runtime and portable adapters are implemented.\n2. Qwen/OpenCode returned no final answer on its first attempt and timed out on its retry. This is a host-reliability result; it doesn't establish whether TLGF improves or worsens Qwen's writing style.\n3. The Claude output-style adapter is ready but hasn't been forward-tested.\n\n---\n\n**Suggested next steps:**\n\nA. Validate the V2 package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\n---\n\nMy reply: B vs C",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "Qwen"
+        ],
+        [
+          "Claude"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [
+        "Validate the V2 package locally",
+        "Validate the package locally"
+      ],
+      "treatment_forbidden_terms": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**What’s happening now:**",
+        "**Suggested next steps:**",
+        "file://"
+      ],
+      "orientation_facts": {
+        "b": [
+          "Qwen"
+        ],
+        "c": [
+          "Claude"
+        ]
+      },
+      "semantic_facts": [
+        "The comparison covers only what distinguishes B from C: B records an evidence boundary and needs no host, while C requires a live forward test.",
+        "A recommendation is stated first.",
+        "Action A and the full frame are not replayed."
+      ],
+      "review_criteria": [
+        "Compare only the material difference between B and C.",
+        "Put the recommended action first.",
+        "Do not replay the frame or discuss action A."
+      ]
+    },
+    {
+      "id": "missing-frame",
+      "mode": "follow-up",
+      "difficulty": "focused",
+      "fixture": "fixtures/standalone-restraint",
+      "workspace_branch": "benchmark-fixture",
+      "fixture_summary": "No frame exists in the conversation or the workspace. The user sends a bare lettered reference. A minimal rebuilt frame that says so and asks one bounded question is acceptable.",
+      "max_response_words": 120,
+      "max_user_questions": 1,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": false,
+      "prompt": "do B",
+      "required_paths": [],
+      "required_term_groups": [
+        [
+          "frame",
+          "earlier message",
+          "previous message",
+          "context"
+        ]
+      ],
+      "treatment_required_term_groups": [],
+      "forbidden_terms": [],
+      "treatment_forbidden_terms": [
+        "file://"
+      ],
+      "orientation_facts": {
+        "gap": [
+          "frame",
+          "earlier message",
+          "previous message",
+          "context"
+        ]
+      },
+      "semantic_facts": [
+        "The answer says that no frame or earlier action list exists to resolve B against.",
+        "No action is invented or executed.",
+        "At most one bounded question asks what B refers to or for the missing frame."
+      ],
+      "review_criteria": [
+        "Say that there is no frame to resolve B against.",
+        "Do not guess or invent an action.",
+        "Ask at most one bounded question; a minimal rebuilt frame is acceptable."
+      ]
+    },
+    {
+      "id": "localized-labels",
+      "mode": "orient",
+      "difficulty": "continuity",
+      "fixture": "fixtures/run-lineage",
+      "workspace_branch": "clarity-fork",
+      "fixture_summary": "The run-lineage fixture with a Polish prompt. The three labels must be rendered naturally in Polish.",
+      "max_response_words": 180,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "labels": {
+        "you_are_here": [
+          "Jesteś tutaj",
+          "Tu jesteś",
+          "Gdzie jesteś"
+        ],
+        "needs_you": [
+          "Potrzebuję cię",
+          "Potrzebna decyzja",
+          "Twoja decyzja",
+          "Potrzebuję Ciebie"
+        ]
+      },
+      "prompt": "Wracam do porównania promptów v3 i v2 dla Qwena. Gdzie to stoi i co dalej?",
+      "required_paths": [
+        "reports/alpha/summary.json",
+        "reports/beta/summary.json",
+        "reports/gamma/summary.json"
+      ],
+      "required_term_groups": [
+        [
+          "alpha"
+        ],
+        [
+          "beta"
+        ],
+        [
+          "gamma"
+        ],
+        [
+          "4/6",
+          "4 z 6"
+        ],
+        [
+          "5/6",
+          "5 z 6"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**Jesteś tutaj:**",
+          "**Tu jesteś:**",
+          "**Gdzie jesteś:**"
+        ],
+        [
+          "**Co się teraz dzieje:**",
+          "**Co się dzieje teraz:**",
+          "**Co dzieje się teraz:**",
+          "**Co się dzieje:**",
+          "**Co teraz się dzieje:**"
+        ],
+        [
+          "**Sugerowane następne kroki:**",
+          "**Sugerowane kolejne kroki:**",
+          "**Proponowane następne kroki:**",
+          "**Proponowane kolejne kroki:**",
+          "**Sugerowane kroki:**",
+          "**Następne kroki:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "80% complete",
+        "83% complete"
+      ],
+      "treatment_forbidden_terms": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "Needs you",
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "active_run": [
+          "beta"
+        ],
+        "predecessor": [
+          "alpha"
+        ]
+      },
+      "semantic_facts": [
+        "The answer is in Polish with the three labels translated naturally.",
+        "Beta is the active run and alpha its predecessor; gamma is outside the comparison.",
+        "The next action targets beta's remaining failed gate."
+      ],
+      "review_criteria": [
+        "Answer in Polish with naturally localized labels.",
+        "Identify beta as active and alpha as predecessor; keep gamma outside the comparison.",
+        "Recommend investigating beta's remaining failure."
+      ]
+    },
+    {
+      "id": "flask-error-handlers",
+      "mode": "resume",
+      "difficulty": "real-repository",
+      "enabled_by_default": false,
+      "requires_preparation": true,
+      "fixture": "fixtures/.real-repos/flask-error-handlers-d318b683",
+      "workspace_branch": "benchmark/flask-error-handlers",
+      "source_repository": {
+        "url": "https://github.com/pallets/flask",
+        "commit": "d318b683471101618febed18996405ad26462110",
+        "license": "BSD-3-Clause"
+      },
+      "fixture_summary": "A pinned Flask source snapshot contains a resumed blueprint 404 investigation. Persistent state still names run alpha, while newer local evidence names beta after a completed CLI-documentation interruption. The answer must verify the real source path and identify one bounded regression-test addition.",
+      "max_response_words": 320,
+      "max_user_questions": 0,
+      "forbid_unmeasured_percent": true,
+      "forbids_needs_user_signal": true,
+      "prompt": "Back to the Flask blueprint 404 investigation after the CLI documentation detour; the saved state may be stale. Where are we, why does a blueprint 404 handler catch abort(404) inside its view but not an unmatched URL under the same prefix, which run is active, and what's the one bounded test to add? Give the exact assertion and single-test command, but don't run the test or install anything.",
+      "required_paths": [
+        ".tlgf/PROVENANCE.md",
+        ".tlgf/STATE.md",
+        ".tlgf/reports/index.json",
+        ".tlgf/reports/alpha.json",
+        ".tlgf/reports/beta.json",
+        "LICENSE.txt",
+        "docs/errorhandling.rst",
+        "src/flask/app.py",
+        "src/flask/wrappers.py",
+        "src/flask/sansio/app.py",
+        "tests/test_user_error_handler.py"
+      ],
+      "required_term_groups": [
+        [
+          "Flask",
+          "flask"
+        ],
+        [
+          "alpha"
+        ],
+        [
+          "beta"
+        ],
+        [
+          "request.blueprints",
+          "blueprints"
+        ],
+        [
+          "_find_error_handler"
+        ],
+        [
+          "tests/test_user_error_handler.py"
+        ],
+        [
+          "test_default_error_handler"
+        ],
+        [
+          "/bp/missing"
+        ],
+        [
+          "pytest tests/test_user_error_handler.py::test_default_error_handler",
+          "pytest tests/test_user_error_handler.py -k test_default_error_handler",
+          "python -m pytest tests/test_user_error_handler.py::test_default_error_handler",
+          "uv run pytest tests/test_user_error_handler.py::test_default_error_handler",
+          "pytest \"tests/test_user_error_handler.py::test_default_error_handler\"",
+          "pytest 'tests/test_user_error_handler.py::test_default_error_handler'"
+        ]
+      ],
+      "treatment_required_term_groups": [
+        [
+          "**You are here:**"
+        ],
+        [
+          "**What's happening now:**",
+          "**What’s happening now:**"
+        ],
+        [
+          "**Suggested next steps:**"
+        ],
+        [
+          "---"
+        ]
+      ],
+      "forbidden_terms": [
+        "run alpha is active",
+        "the state file is current",
+        "the blueprint owns the URL prefix",
+        "modify the source now"
+      ],
+      "treatment_forbidden_terms": [
+        "Need from you:",
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "file://"
+      ],
+      "orientation_facts": {
+        "project": [
+          "Flask",
+          "flask"
+        ],
+        "active_run": [
+          "beta"
+        ],
+        "predecessor": [
+          "alpha"
+        ],
+        "next_test": [
+          "/bp/missing"
+        ]
+      },
+      "review_criteria": [
+        "Identify Flask, the pinned commit, the benchmark branch, and run beta without trusting stale run alpha state.",
+        "Explain the mechanism across dispatch_request, handle_http_exception, Request.blueprints, and _find_error_handler without claiming that a blueprint owns its URL prefix.",
+        "Distinguish NotFound raised inside a matched blueprint view from NotFound produced before URL matching identifies a blueprint.",
+        "Recommend one bounded assertion for /bp/missing beside test_default_error_handler and one exact single-test command, without modifying the read-only workspace.",
+        "Keep the completed CLI documentation detour collapsed because it no longer affects the active action."
+      ],
+      "semantic_facts": [
+        "Run beta is active; the saved state that names alpha is stale.",
+        "The investigation is pinned to Flask commit d318b683 on branch benchmark/flask-error-handlers.",
+        "An unmatched URL fails during routing before any blueprint is identified, so request.blueprints is empty and _find_error_handler consults only the application handler.",
+        "A NotFound raised inside a matched blueprint view is handled by the blueprint handler because the request already names that blueprint.",
+        "The completed CLI documentation detour is collapsed because it no longer affects the active action."
+      ],
+      "deliverable_after_frame": true
+    }
+  ]
+}

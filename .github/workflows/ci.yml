@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate TLGF package
+        run: python3 tlgf/scripts/check.py
+      - name: Test shared benchmark tools
+        run: python3 -m unittest discover -s benchmarks/tests -p 'test_*.py'
+      - name: Test TLGF benchmark harness
+        run: python3 -m unittest discover -s benchmarks/tlgf/tests -p 'test_*.py'
+      - name: Check benchmark manifest without agents
+        run: python3 benchmarks/tlgf/run.py doctor

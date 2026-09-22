@@ -1,0 +1,9 @@
+{
+  "run_id": "alpha",
+  "status": "completed",
+  "evidence": [
+    "docs/errorhandling.rst"
+  ],
+  "result": "Documentation says a blueprint cannot handle a routing 404 because Flask cannot determine the blueprint.",
+  "unresolved": "Source mechanism and exact regression-test location"
+}

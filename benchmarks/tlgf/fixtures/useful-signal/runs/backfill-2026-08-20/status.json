@@ -1,0 +1,12 @@
+{
+  "run_id": "backfill-2026-08-20",
+  "environment": "analytics-staging",
+  "status": "running",
+  "shards_completed": 72,
+  "shards_total": 120,
+  "failed_shards": 0,
+  "validation": {
+    "checksums": "pending",
+    "deduplication": "pending"
+  }
+}

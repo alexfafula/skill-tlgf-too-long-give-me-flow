@@ -1,0 +1,9 @@
+{
+  "run_id": "beta",
+  "parent_run_id": "alpha",
+  "branch": "clarity-fork",
+  "gates_passed": 5,
+  "gates_total": 6,
+  "attempt_count": 1,
+  "failed_gates": ["missing-output-retry"]
+}

@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "skill": "tlgf",
+  "cases": [
+    {
+      "id": "parallel-work-status",
+      "purpose": "Orient a user who has several workstreams open without listing the whole portfolio.",
+      "prompt": "I have ten agent windows open and just returned to this one. The checkout is on clarity-fork. We are replacing the old six-field status format with a three-field TLGF format. The runtime contract is written but has not been validated. Tell me where this window stands and what happens next. TLGF",
+      "must_include": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "1.",
+        "A.",
+        "clarity-fork",
+        "validation"
+      ],
+      "must_avoid": [
+        "Worth noticing:",
+        "Current goal:",
+        "Progress so far:",
+        "Need from you:",
+        "TLGF EXEC"
+      ]
+    },
+    {
+      "id": "running-work-useful-signal",
+      "purpose": "Keep a preliminary discovery inside Now without derailing active work.",
+      "prompt": "The August import is actually running: 72 of 120 files are complete. A nondeduplicated preview shows partner-north at 18.4% conversion versus a 6.2% historical baseline. Validation can only run after the import finishes. Give me the current flow. TLGF",
+      "must_include": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "1.",
+        "A.",
+        "72",
+        "120",
+        "partner-north",
+        "preliminary"
+      ],
+      "must_avoid": [
+        "Worth noticing:",
+        "stop the import",
+        "proven",
+        "Need from you:",
+        "⛔ **Needs you**",
+        "TLGF"
+      ]
+    },
+    {
+      "id": "blocked-decision-triage",
+      "purpose": "Compress a real blocker into current-state bullets and resolve it through a short recommended path.",
+      "prompt": "The release cannot continue because the migration would overwrite 14 customer records. The dry run identifies the exact records, and the operation is reversible only before deployment. Only I can authorize whether we delay for repair or exclude the records and document follow-up. Give me the status and recommendation. Do not perform the migration. TLGF",
+      "must_include": [
+        "⛔ **Needs you**",
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "1.",
+        "A.",
+        "14",
+        "dry run"
+      ],
+      "must_avoid": [
+        "TLGF DECIDE",
+        "Options:",
+        "Need from you:",
+        "run the migration now",
+        "TLGF"
+      ]
+    },
+    {
+      "id": "retry-lineage",
+      "purpose": "Preserve the difference between recovered outcome and first-attempt reliability.",
+      "prompt": "Run beta is current and replaced alpha for prompt v3. Beta passed all six checks, but only on its second attempt after the first returned no answer. Summarize the current flow and recommend the next test. TLGF",
+      "must_include": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "1.",
+        "A.",
+        "beta",
+        "alpha",
+        "first attempt",
+        "retry"
+      ],
+      "must_avoid": [
+        "reliable",
+        "clean pass",
+        "six-field",
+        "TLGF"
+      ]
+    },
+    {
+      "id": "standalone-restraint",
+      "purpose": "Answer a standalone technical question without inventing project state or forcing the triptych.",
+      "prompt": "What does idempotent mean in an HTTP API? Give one concrete example. TLGF",
+      "must_include": [
+        "idempotent"
+      ],
+      "must_avoid": [
+        "You are here:",
+        "What's happening now:",
+        "Suggested next steps:",
+        "project",
+        "workstream",
+        "TLGF"
+      ]
+    },
+    {
+      "id": "addressable-expand",
+      "purpose": "Expand one numbered state point without replaying the entire orientation frame.",
+      "prompt": "The latest TLGF frame said:\n\n**You are here:** TLGF V2 › validation\n\n---\n\n**What's happening now:**\n\n1. The runtime and adapters are implemented.\n2. Qwen/OpenCode returned no final answer on the first attempt and then timed out, so host reliability remains unresolved and the writing style cannot be judged.\n3. The Claude adapter is ready but has not been forward-tested.\n\n---\n\n**Suggested next steps:**\n\nA. Validate the package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\n---\n\nMy next message is only: expand 2",
+      "must_include": [
+        "Qwen",
+        "no final answer",
+        "timed out",
+        "reliability",
+        "style"
+      ],
+      "must_avoid": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "runtime and adapters",
+        "Claude adapter"
+      ]
+    },
+    {
+      "id": "addressable-action",
+      "purpose": "Resolve a bare letter against the latest frame and continue the selected action only.",
+      "prompt": "The latest TLGF frame offered these actions:\n\nA. Validate the package locally.\nB. Classify the Qwen result as a host-reliability result without treating it as evidence about writing style.\nC. Forward-test the Claude adapter.\n\nMy next message is only: B",
+      "must_include": [
+        "Qwen",
+        "reliability",
+        "style"
+      ],
+      "must_avoid": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "validate the package",
+        "Claude adapter"
+      ]
+    },
+    {
+      "id": "polish-localized-labels",
+      "purpose": "Localize the three labels naturally in the user's language without bilingual labels or untranslated English field names.",
+      "prompt": "Wracam do tego okna po przerwie. Gałąź to clarity-fork. Walidator pakietu przeszedł, ale test smoke na Codex nie był jeszcze uruchomiony po ostatniej zmianie SKILL.md. Powiedz mi, gdzie jestem i co dalej. TLGF",
+      "must_include": [
+        "Jesteś tutaj",
+        "---",
+        "1.",
+        "A.",
+        "clarity-fork"
+      ],
+      "must_avoid": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "Needs you"
+      ]
+    },
+    {
+      "id": "missing-frame-reference",
+      "purpose": "Refuse to guess when a short reference has no frame to resolve against; name the gap and rebuild or ask once.",
+      "prompt": "This is the first message of a brand-new session, and no TLGF frame has been shown yet. My entire message is: do B. TLGF",
+      "must_include": [
+        "frame"
+      ],
+      "must_avoid": [
+        "**You are here:**",
+        "Executed B",
+        "I executed",
+        "Done."
+      ]
+    },
+    {
+      "id": "deliverable-after-triptych",
+      "purpose": "Put a requested deliverable after the closing break without repeating the triptych as a summary.",
+      "prompt": "Branch clarity-fork. The TLGF validator passes after the SKILL.md edit, and the Codex smoke has not been rerun since. Give me the status, then the exact command to rerun the smoke for the run-lineage and useful-signal cases: benchmarks/tlgf/run-smoke.sh --cases run-lineage,useful-signal. TLGF",
+      "must_include": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "benchmarks/tlgf/run-smoke.sh --cases run-lineage,useful-signal"
+      ],
+      "must_avoid": [
+        "Need from you:",
+        "In summary",
+        "To summarize"
+      ]
+    },
+    {
+      "id": "park-point",
+      "purpose": "Park one numbered point as an inactive lead with evidence and a revisit condition, without replaying the frame or creating a new public field.",
+      "prompt": "The latest TLGF frame said:\n\n**You are here:** Customer analytics › August backfill › import running\n\n---\n\n**What's happening now:**\n\n1. The import has completed 72 of 120 shards with no failures.\n2. Validation runs only after the import finishes.\n3. Preliminary: partner-north shows 18.4% conversion in a nondeduplicated preview versus a 6.2% validated baseline.\n\n---\n\n**Suggested next steps:**\n\nA. Let the import finish, then run validation.\n\n---\n\nProject writes are authorized. My next message is only: park 3",
+      "must_include": [
+        "partner-north",
+        "revisit"
+      ],
+      "must_avoid": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "stop the import"
+      ]
+    },
+    {
+      "id": "refresh-after-action",
+      "purpose": "Rebuild the frame after a material state change, renumbering from 1 and relettering from A without carrying the resolved action forward.",
+      "prompt": "The latest TLGF frame offered:\n\nA. Validate the package locally.\nB. Classify the Qwen result without treating it as style evidence.\nC. Forward-test the Claude adapter.\n\nI ran A: python3 tlgf/scripts/check.py printed TLGF valid. My next message is only: refresh",
+      "must_include": [
+        "**You are here:**",
+        "**What's happening now:**",
+        "**Suggested next steps:**",
+        "---",
+        "1.",
+        "A.",
+        "valid"
+      ],
+      "must_avoid": [
+        "A. Validate the package locally",
+        "Need from you:"
+      ]
+    }
+  ]
+}

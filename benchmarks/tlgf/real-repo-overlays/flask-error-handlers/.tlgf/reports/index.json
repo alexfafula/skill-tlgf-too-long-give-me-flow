@@ -1,0 +1,12 @@
+{
+  "project": "Flask",
+  "workstream": "blueprint-404-error-handlers",
+  "active_run": "beta",
+  "predecessor": "alpha",
+  "interruption": {
+    "workstream": "CLI documentation link check",
+    "status": "completed",
+    "result": "No source change required"
+  },
+  "next_artifact": "tests/test_user_error_handler.py::test_default_error_handler"
+}

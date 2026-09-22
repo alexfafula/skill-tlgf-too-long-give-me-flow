@@ -1,0 +1,8 @@
+{
+  "issue": "retry-184",
+  "verified": {
+    "path": "src/retry.ts",
+    "finding": "TimeoutError makes canRetry false and bypasses backoff."
+  },
+  "unresolved": "Whether targeted timeout coverage is absent and allowed the regression to escape validation."
+}

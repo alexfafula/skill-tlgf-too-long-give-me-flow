@@ -1,0 +1,11 @@
+{
+  "run_id": "alpha",
+  "parent_run_id": null,
+  "branch": "clarity-fork",
+  "model": "qwen",
+  "prompt_version": "v2",
+  "gates_passed": 4,
+  "gates_total": 6,
+  "attempt_count": 1,
+  "failed_gates": ["active-lineage", "resume-cue"]
+}

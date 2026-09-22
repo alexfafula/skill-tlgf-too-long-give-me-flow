@@ -1,0 +1,17 @@
+{
+  "scope": "first 72 of 120 shards",
+  "status": "preliminary and not deduplicated",
+  "segments": [
+    {
+      "name": "partner-north",
+      "trial_accounts": 18432,
+      "trial_to_paid_rate": 0.184
+    },
+    {
+      "name": "all-other-referrals",
+      "trial_accounts": 210445,
+      "trial_to_paid_rate": 0.061
+    }
+  ],
+  "interpretation_warning": "Late shards, checksum validation, and deduplication can change these rates."
+}

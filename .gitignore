@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+
+benchmarks/results/
+benchmarks/tlgf/fixtures/.real-repos/
+__pycache__/
+*.pyc

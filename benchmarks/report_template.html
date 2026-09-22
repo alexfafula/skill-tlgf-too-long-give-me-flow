@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>TLGF continuity benchmark report</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --surface: #0d192b;
+      --surface-2: #111f34;
+      --surface-3: #172842;
+      --text: #eef5ff;
+      --muted: #9cb0ca;
+      --line: #29405f;
+      --control: #ffb55b;
+      --control-bg: #2b1d10;
+      --treatment: #57d9a3;
+      --treatment-bg: #0d2a23;
+      --tlgf: var(--treatment);
+      --tlgf-bg: var(--treatment-bg);
+      --tlgd: var(--treatment);
+      --tlgd-bg: var(--treatment-bg);
+      --danger: #ff7d87;
+      --focus: #7cb7ff;
+      --shadow: 0 18px 50px rgb(0 0 0 / 28%);
+      --radius: 16px;
+      --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    html[data-theme="light"] {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #f7f9fd;
+      --surface-3: #edf3fb;
+      --text: #142235;
+      --muted: #53677f;
+      --line: #cbd7e6;
+      --control: #9a5600;
+      --control-bg: #fff3e3;
+      --treatment: #087a52;
+      --treatment-bg: #e8f8f1;
+      --tlgf: var(--treatment);
+      --tlgf-bg: var(--treatment-bg);
+      --tlgd: var(--treatment);
+      --tlgd-bg: var(--treatment-bg);
+      --danger: #b42331;
+      --focus: #075eaa;
+      --shadow: 0 18px 44px rgb(42 63 92 / 14%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgb(37 92 145 / 16%), transparent 34rem),
+        radial-gradient(circle at 85% 10%, rgb(28 138 99 / 13%), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--focus);
+      text-underline-offset: 0.18em;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    select,
+    input[type="search"] {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    button {
+      padding: 0.55rem 0.8rem;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button[aria-pressed="true"] {
+      border-color: var(--focus);
+      background: var(--surface-3);
+    }
+
+    :focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--focus) 60%, transparent);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 100;
+      transform: translateY(-180%);
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .page {
+      width: min(1800px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2.5rem 0 5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.5rem;
+      color: var(--tlgd);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.18;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 18ch;
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      letter-spacing: -0.045em;
+    }
+
+    .lede {
+      max-width: 72ch;
+      margin: 1rem 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: flex-end;
+    }
+
+    .notice {
+      margin: 0 0 1.5rem;
+      padding: 0.95rem 1rem;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--control);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--muted);
+    }
+
+    .notice strong {
+      color: var(--text);
+    }
+
+    .run-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .run-meta li,
+    .chip {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+      padding: 0.38rem 0.58rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .run-meta code,
+    .chip code {
+      color: var(--text);
+      font-family: var(--mono);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+      min-width: 0;
+      padding: 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--surface), var(--surface-2));
+      box-shadow: var(--shadow);
+    }
+
+    .summary-card h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .model-name {
+      margin: 0.35rem 0 1rem;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+
+    .summary-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 0.75rem;
+      border-radius: 12px;
+      background: var(--surface-3);
+    }
+
+    .metric-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .metric-value {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 1.25rem;
+      font-weight: 750;
+    }
+
+    .positive {
+      color: var(--tlgd);
+    }
+
+    .negative {
+      color: var(--danger);
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0.75rem;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(200px, 1fr) auto auto;
+      gap: 0.75rem;
+      align-items: end;
+      margin: 1.5rem 0;
+      padding: 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .field {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .field label,
+    .field-label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 2.45rem;
+      padding: 0.45rem 0.65rem;
+    }
+
+    .selects {
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    .view-buttons {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .comparison-list {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .comparison {
+      scroll-margin-top: 7rem;
+      overflow: clip;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .comparison[hidden] {
+      display: none;
+    }
+
+    .comparison-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      padding: 1.1rem;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    .comparison-title {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .comparison-subtitle {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .pair-deltas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: flex-end;
+    }
+
+    details {
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    summary {
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .prompt-content {
+      padding: 0 1.1rem 1.1rem;
+    }
+
+    .prompt-grid,
+    .answer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .prompt-panel,
+    .answer-panel {
+      min-width: 0;
+      background: var(--surface);
+    }
+
+    .prompt-panel {
+      padding: 0.85rem;
+    }
+
+    .panel-header {
+      position: sticky;
+      top: 5.7rem;
+      z-index: 5;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 94%, transparent);
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-control .panel-header {
+      border-top: 3px solid var(--control);
+    }
+
+    .panel-tlgd .panel-header,
+    .panel-tlgf .panel-header,
+    .panel-treatment .panel-header {
+      border-top: 3px solid var(--treatment);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .panel-control .panel-title {
+      color: var(--control);
+    }
+
+    .panel-tlgd .panel-title,
+    .panel-tlgf .panel-title,
+    .panel-treatment .panel-title {
+      color: var(--treatment);
+    }
+
+    .panel-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .status-pass {
+      border-color: color-mix(in srgb, var(--tlgd) 50%, var(--line));
+      color: var(--tlgd);
+    }
+
+    .status-fail {
+      border-color: color-mix(in srgb, var(--danger) 50%, var(--line));
+      color: var(--danger);
+    }
+
+    .formatted-response {
+      max-width: 100%;
+      padding: 1rem 1.15rem 1.5rem;
+      overflow-wrap: anywhere;
+    }
+
+    .formatted-response > :first-child {
+      margin-top: 0;
+    }
+
+    .formatted-response h1,
+    .formatted-response h2,
+    .formatted-response h3,
+    .formatted-response h4,
+    .formatted-response h5,
+    .formatted-response h6 {
+      margin: 1.45rem 0 0.55rem;
+      letter-spacing: -0.018em;
+    }
+
+    .formatted-response h1 {
+      max-width: none;
+      font-size: 1.55rem;
+    }
+
+    .formatted-response h2 {
+      font-size: 1.35rem;
+    }
+
+    .formatted-response h3 {
+      font-size: 1.15rem;
+    }
+
+    .formatted-response p,
+    .formatted-response ul,
+    .formatted-response ol,
+    .formatted-response blockquote {
+      margin: 0.65rem 0;
+    }
+
+    .formatted-response li + li {
+      margin-top: 0.25rem;
+    }
+
+    .formatted-response blockquote {
+      padding: 0.25rem 0 0.25rem 0.85rem;
+      border-left: 3px solid var(--line);
+      color: var(--muted);
+    }
+
+    .formatted-response code,
+    .raw-response,
+    .diff-response,
+    .prompt-text {
+      font-family: var(--mono);
+    }
+
+    .formatted-response code {
+      padding: 0.12em 0.3em;
+      border-radius: 5px;
+      background: var(--surface-3);
+      font-size: 0.88em;
+    }
+
+    .formatted-response pre,
+    .raw-response,
+    .diff-response,
+    .prompt-text {
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .formatted-response pre {
+      padding: 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--bg);
+    }
+
+    .formatted-response pre code {
+      padding: 0;
+      background: transparent;
+    }
+
+    .formatted-response table {
+      width: 100%;
+      margin: 0.85rem 0;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .formatted-response th,
+    .formatted-response td {
+      padding: 0.55rem;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .formatted-response th {
+      background: var(--surface-3);
+    }
+
+    .raw-response,
+    .diff-response,
+    .prompt-text {
+      margin: 0;
+      padding: 1rem;
+      color: var(--text);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      tab-size: 2;
+    }
+
+    .raw-response {
+      min-height: 24rem;
+    }
+
+    .diff-response {
+      min-height: 20rem;
+      background: var(--bg);
+    }
+
+    .criteria {
+      margin: 1rem 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .criteria h4 {
+      margin: 0 0 0.35rem;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .criteria ul {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .view-stack .answer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .view-stack .panel-header {
+      position: static;
+    }
+
+    .empty-state {
+      padding: 3rem 1rem;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .report-footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 1000px) {
+      .hero,
+      .comparison-header {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .pair-deltas {
+        justify-content: flex-start;
+      }
+
+      .toolbar {
+        position: static;
+        grid-template-columns: 1fr;
+      }
+
+      .selects {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .answer-grid,
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-header {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 1rem, 1800px);
+        padding-top: 1rem;
+      }
+
+      .summary-metrics,
+      .selects {
+        grid-template-columns: 1fr;
+      }
+
+      .view-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media print {
+      :root {
+        --bg: #fff;
+        --surface: #fff;
+        --surface-2: #fff;
+        --surface-3: #f4f4f4;
+        --text: #111;
+        --muted: #444;
+        --line: #aaa;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: 100%;
+      }
+
+      .hero-actions,
+      .toolbar {
+        display: none;
+      }
+
+      .comparison,
+      .summary-card {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .comparison[hidden] {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#comparisons">Skip to comparisons</a>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow" id="report-eyebrow">Cognitive-continuity A/B benchmark</p>
+        <h1 id="report-title">Control and TLGF, side by side</h1>
+        <p class="lede" id="lede"></p>
+      </div>
+      <nav class="hero-actions" aria-label="Report files" id="report-links"></nav>
+    </header>
+
+    <p class="notice"><strong>Preliminary:</strong> <span id="notice-text"></span></p>
+    <ul class="run-meta" id="run-meta" aria-label="Run metadata"></ul>
+    <section aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Results by agent</h2>
+      <div class="summary-grid" id="summary-grid"></div>
+    </section>
+
+    <section aria-labelledby="comparisons-heading">
+      <h2 id="comparisons-heading">Response comparisons</h2>
+      <div class="toolbar" aria-label="Comparison controls">
+        <div class="field">
+          <label for="search">Search prompts and responses</label>
+          <input id="search" type="search" placeholder="Search text, case, or model">
+        </div>
+        <div class="selects">
+          <div class="field">
+            <label for="agent-filter">Agent</label>
+            <select id="agent-filter"></select>
+          </div>
+          <div class="field">
+            <label for="case-filter">Case</label>
+            <select id="case-filter"></select>
+          </div>
+        </div>
+        <div>
+          <span class="field-label">Default view</span>
+          <div class="view-buttons" role="group" aria-label="Default response view">
+            <button type="button" data-global-view="side" aria-pressed="true">Side by side</button>
+            <button type="button" data-global-view="raw" aria-pressed="false">Raw</button>
+            <button type="button" data-global-view="diff" aria-pressed="false">Diff</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-list" id="comparisons"></div>
+      <p class="empty-state" id="empty-state" hidden>No comparisons match these filters.</p>
+    </section>
+
+    <footer class="report-footer">
+      This self-contained report excludes environment secrets and raw agent event streams.
+      Open a linked result JSON to inspect the recorded execution metadata.
+    </footer>
+  </main>
+
+  <script id="report-data" type="application/json">__REPORT_DATA__</script>
+  <script>
+    "use strict";
+
+    const report = JSON.parse(document.getElementById("report-data").textContent);
+    const state = { view: "side", agent: "all", caseId: "all", search: "" };
+    const controlLabel = report.controlLabel || "Control";
+    const treatmentLabel = report.treatmentLabel || "TLGF";
+    document.title = report.title || `${treatmentLabel} continuity benchmark report`;
+    document.getElementById("report-eyebrow").textContent = report.eyebrow || "Cognitive-continuity A/B benchmark";
+    document.getElementById("report-title").textContent = `${controlLabel} and ${treatmentLabel}, side by side`;
+
+    function element(tag, attributes = {}, children = []) {
+      const node = document.createElement(tag);
+      for (const [name, value] of Object.entries(attributes)) {
+        if (name === "className") node.className = value;
+        else if (name === "text") node.textContent = value;
+        else if (name.startsWith("data-")) node.setAttribute(name, value);
+        else if (value !== null && value !== undefined) node.setAttribute(name, value);
+      }
+      const values = Array.isArray(children) ? children : [children];
+      for (const child of values) {
+        if (child === null || child === undefined) continue;
+        node.append(child instanceof Node ? child : document.createTextNode(String(child)));
+      }
+      return node;
+    }
+
+    function formatNumber(value, maximumFractionDigits = 0) {
+      if (value === null || value === undefined) return "n/a";
+      return new Intl.NumberFormat("en-US", { maximumFractionDigits }).format(value);
+    }
+
+    function deltaLabel(value, noun) {
+      if (value === null || value === undefined) return `${noun}: n/a`;
+      const direction = value >= 0 ? "less" : "more";
+      return `${formatNumber(Math.abs(value), 2)}% ${direction} ${noun}`;
+    }
+
+    function deltaClass(value) {
+      if (value === null || value === undefined || value === 0) return "";
+      return value > 0 ? "positive" : "negative";
+    }
+
+    function safeLinkTarget(value) {
+      if (typeof value !== "string") return null;
+      if (/^(https?:|file:|\/|\.|#)/i.test(value)) return value;
+      return null;
+    }
+
+    function appendInline(parent, text) {
+      const pattern = /(`[^`]+`|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
+      let cursor = 0;
+      for (const match of text.matchAll(pattern)) {
+        parent.append(document.createTextNode(text.slice(cursor, match.index)));
+        const token = match[0];
+        if (token.startsWith("`")) {
+          parent.append(element("code", { text: token.slice(1, -1) }));
+        } else if (token.startsWith("**")) {
+          parent.append(element("strong", { text: token.slice(2, -2) }));
+        } else {
+          const parts = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+          const target = parts ? safeLinkTarget(parts[2]) : null;
+          parent.append(
+            target
+              ? element("a", { href: target, text: parts[1] })
+              : document.createTextNode(parts ? parts[1] : token)
+          );
+        }
+        cursor = match.index + token.length;
+      }
+      parent.append(document.createTextNode(text.slice(cursor)));
+    }
+
+    function tableCells(line) {
+      return line.trim().replace(/^\||\|$/g, "").split("|").map((cell) => cell.trim());
+    }
+
+    function isTableDivider(line) {
+      const cells = tableCells(line);
+      return cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(cell));
+    }
+
+    function renderMarkdown(markdown) {
+      const root = element("div", { className: "formatted-response" });
+      const lines = String(markdown || "").split("\n");
+      let index = 0;
+      let list = null;
+
+      function closeList() {
+        list = null;
+      }
+
+      while (index < lines.length) {
+        const line = lines[index];
+        if (/^```/.test(line.trim())) {
+          closeList();
+          const language = line.trim().slice(3).trim();
+          const codeLines = [];
+          index += 1;
+          while (index < lines.length && !/^```/.test(lines[index].trim())) {
+            codeLines.push(lines[index]);
+            index += 1;
+          }
+          const code = element("code", { text: codeLines.join("\n") });
+          if (language) code.setAttribute("data-language", language);
+          root.append(element("pre", {}, code));
+          index += 1;
+          continue;
+        }
+
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        if (heading) {
+          closeList();
+          const headingNode = element(`h${heading[1].length}`);
+          appendInline(headingNode, heading[2]);
+          root.append(headingNode);
+          index += 1;
+          continue;
+        }
+
+        if (index + 1 < lines.length && line.includes("|") && isTableDivider(lines[index + 1])) {
+          closeList();
+          const table = element("table");
+          const headRow = element("tr");
+          for (const cell of tableCells(line)) {
+            const th = element("th", { scope: "col" });
+            appendInline(th, cell);
+            headRow.append(th);
+          }
+          table.append(element("thead", {}, headRow));
+          const body = element("tbody");
+          index += 2;
+          while (index < lines.length && lines[index].includes("|") && lines[index].trim()) {
+            const row = element("tr");
+            for (const cell of tableCells(lines[index])) {
+              const td = element("td");
+              appendInline(td, cell);
+              row.append(td);
+            }
+            body.append(row);
+            index += 1;
+          }
+          table.append(body);
+          root.append(table);
+          continue;
+        }
+
+        const unordered = line.match(/^\s*[-*]\s+(.+)$/);
+        const ordered = line.match(/^\s*\d+[.)]\s+(.+)$/);
+        if (unordered || ordered) {
+          const type = unordered ? "ul" : "ol";
+          if (!list || list.tagName.toLowerCase() !== type) {
+            list = element(type);
+            root.append(list);
+          }
+          const item = element("li");
+          appendInline(item, (unordered || ordered)[1]);
+          list.append(item);
+          index += 1;
+          continue;
+        }
+
+        const quote = line.match(/^>\s?(.*)$/);
+        if (quote) {
+          closeList();
+          const node = element("blockquote");
+          appendInline(node, quote[1]);
+          root.append(node);
+          index += 1;
+          continue;
+        }
+
+        if (/^\s*(?:---+|___+)\s*$/.test(line)) {
+          closeList();
+          root.append(element("hr"));
+          index += 1;
+          continue;
+        }
+
+        if (!line.trim()) {
+          closeList();
+          index += 1;
+          continue;
+        }
+
+        closeList();
+        const paragraphLines = [line.trim()];
+        index += 1;
+        while (
+          index < lines.length &&
+          lines[index].trim() &&
+          !/^(#{1,6})\s+/.test(lines[index]) &&
+          !/^```/.test(lines[index].trim()) &&
+          !/^\s*[-*]\s+/.test(lines[index]) &&
+          !/^\s*\d+[.)]\s+/.test(lines[index]) &&
+          !/^>/.test(lines[index])
+        ) {
+          paragraphLines.push(lines[index].trim());
+          index += 1;
+        }
+        const paragraph = element("p");
+        appendInline(paragraph, paragraphLines.join(" "));
+        root.append(paragraph);
+      }
+      return root;
+    }
+
+    function metric(label, value, className = "") {
+      return element("div", { className: "metric" }, [
+        element("span", { className: "metric-label", text: label }),
+        element("span", { className: `metric-value ${className}`.trim(), text: value })
+      ]);
+    }
+
+    function chip(text, className = "") {
+      return element("span", { className: `chip ${className}`.trim(), text });
+    }
+
+    function addOption(select, value, label) {
+      select.append(element("option", { value, text: label }));
+    }
+
+    function renderHeader() {
+      document.getElementById("lede").textContent =
+        `${report.responseCount} responses across ${report.pairCount} paired comparisons. ` +
+        "Inspect the exact prompts, final answers, gates, and provider-reported token usage.";
+      document.getElementById("notice-text").textContent = report.notice;
+
+      const links = document.getElementById("report-links");
+      const available = [
+        [report.analysisUrl, "Analysis"],
+        [report.reviewUrl, "Reviewer notes"],
+        [report.markdownReportUrl, "Markdown report"],
+        [report.blindReviewUrl, "Blind review form"]
+      ];
+      for (const [url, label] of available) {
+        if (url) links.append(element("a", { href: url, text: label }));
+      }
+      const themeButton = element("button", { type: "button", text: "Use light theme" });
+      themeButton.addEventListener("click", () => {
+        const htmlNode = document.documentElement;
+        const light = htmlNode.dataset.theme !== "light";
+        htmlNode.dataset.theme = light ? "light" : "dark";
+        themeButton.textContent = light ? "Use dark theme" : "Use light theme";
+      });
+      links.append(themeButton);
+
+      const metadata = [
+        ["Run", report.runId],
+        ["Commit", report.repositoryCommit],
+        ["Pairs", report.pairCount],
+        ["Seed", report.seed]
+      ];
+      const root = document.getElementById("run-meta");
+      for (const [label, value] of metadata) {
+        if (value === null || value === undefined || value === "") continue;
+        const item = element("li");
+        item.append(`${label}: `, element("code", { text: String(value) }));
+        root.append(item);
+      }
+    }
+
+    function renderSummaries() {
+      const root = document.getElementById("summary-grid");
+      for (const summary of report.summaries) {
+        const card = element("article", { className: "summary-card" });
+        card.append(
+          element("h2", { text: summary.agent }),
+          element("p", {
+            className: "model-name",
+            text: summary.models.length ? summary.models.join(", ") : "Runtime model not reported"
+          }),
+          element("div", { className: "summary-metrics" }, [
+            metric("All saved reader words", deltaLabel(summary.allWordReduction, "words"), deltaClass(summary.allWordReduction)),
+            metric("All saved agent-loop output", deltaLabel(summary.allOutputTokenReduction, "tokens"), deltaClass(summary.allOutputTokenReduction)),
+            metric("All saved total tokens", deltaLabel(summary.allTotalTokenReduction, "tokens"), deltaClass(summary.allTotalTokenReduction)),
+            metric("All saved final-step output", deltaLabel(summary.allFinalStepOutputTokenReduction, "tokens"), deltaClass(summary.allFinalStepOutputTokenReduction)),
+            metric("Comparable reader words", deltaLabel(summary.wordReduction, "words"), deltaClass(summary.wordReduction)),
+            metric("Comparable pairs", `${summary.comparablePairCount}/${summary.pairCount}`),
+            metric(`${controlLabel} all-saved words`, formatNumber(summary.allControlWords)),
+            metric(`${treatmentLabel} all-saved words`, formatNumber(summary.allTlgfWords ?? summary.allTreatmentWords ?? summary.allTlgdWords)),
+            metric(`${controlLabel} gates`, `${summary.controlPassed}/${summary.pairCount}`),
+            metric(`${treatmentLabel} gates`, `${summary.tlgfPassed ?? summary.treatmentPassed ?? summary.tlgdPassed}/${summary.pairCount}`),
+            summary.budgetTracked
+              ? metric(`${controlLabel} word budgets`, `${summary.controlBudgetPassed}/${summary.pairCount}`)
+              : null,
+            summary.budgetTracked
+              ? metric(`${treatmentLabel} word budgets`, `${summary.tlgfBudgetPassed ?? summary.treatmentBudgetPassed ?? summary.tlgdBudgetPassed}/${summary.pairCount}`)
+              : null,
+            metric(`${controlLabel} retries`, formatNumber(summary.controlRetries)),
+            metric(`${treatmentLabel} retries`, formatNumber(summary.tlgfRetries ?? summary.treatmentRetries ?? summary.tlgdRetries))
+          ])
+        );
+        root.append(card);
+      }
+    }
+
+    function promptPanel(title, prompt, className) {
+      return element("section", { className: `prompt-panel ${className}` }, [
+        element("h4", { text: title }),
+        element("pre", { className: "prompt-text", text: prompt })
+      ]);
+    }
+
+    function answerPanel(title, result, className) {
+      const gateClass = result.gatePassed ? "status-pass" : "status-fail";
+      const statusClass = result.status === "SUCCESS" ? "status-pass" : "status-fail";
+      const statusLabel = result.finishReason
+        ? `Status: ${result.status} · ${result.finishReason}`
+        : `Status: ${result.status}`;
+      const header = element("header", { className: "panel-header" }, [
+        element("h4", { className: "panel-title", text: title }),
+        element("div", { className: "panel-metrics" }, [
+          chip(statusLabel, statusClass),
+          chip(result.gatePassed ? "Gate: pass" : "Gate: fail", gateClass),
+          result.budgetTracked
+            ? chip(
+                result.budgetPassed ? "Word budget: pass" : "Word budget: over",
+                result.budgetPassed ? "status-pass" : "status-fail"
+              )
+            : null,
+          chip(`${formatNumber(result.words)} reader-visible words`),
+          result.markdownSourceWords !== result.words
+            ? chip(`${formatNumber(result.markdownSourceWords)} Markdown-source words`)
+            : null,
+          chip(`${formatNumber(result.outputTokens)} total loop tokens`),
+          chip(`${formatNumber(result.totalTokens)} total tokens`),
+          chip(`${formatNumber(result.finalStepOutputTokens)} final-step tokens`),
+          result.attemptCount > 1
+            ? chip(`${formatNumber(result.attemptCount)} attempts · ${result.attemptStatuses.join(" → ")}`, "status-fail")
+            : chip("1 attempt"),
+          chip(`${formatNumber(result.durationSeconds, 1)} s`)
+        ])
+      ]);
+      const panel = element("section", { className: `answer-panel ${className}` });
+      const answer = result.response
+        ? renderMarkdown(result.response)
+        : element("p", { className: "formatted-response", text: "No final answer was returned." });
+      panel.append(header, answer);
+      return panel;
+    }
+
+    function rawPanel(title, result, className) {
+      const headerChildren = [element("h4", { className: "panel-title", text: title })];
+      if (result.rawJsonUrl) {
+        headerChildren.push(element("a", { href: result.rawJsonUrl, text: "Open result JSON" }));
+      }
+      const children = [
+        element("header", { className: "panel-header" }, headerChildren),
+        element("pre", { className: "raw-response", text: result.response })
+      ];
+      if (result.visibleText !== result.response) {
+        children.push(
+          element("h5", { text: "All visible assistant text" }),
+          element("pre", { className: "raw-response", text: result.visibleText })
+        );
+      }
+      if (Array.isArray(result.attempts) && result.attempts.length > 1) {
+        const details = element("details", { open: "" });
+        details.append(element("summary", { text: `All attempts (${result.attempts.length})` }));
+        for (const attempt of result.attempts) {
+          const reason = attempt.finishReason ? ` · ${attempt.finishReason}` : "";
+          details.append(
+            element("h5", { text: `Attempt ${attempt.number}: ${attempt.status}${reason}` }),
+            element("p", {
+              className: "criteria",
+              text: `${formatNumber(attempt.outputTokens)} output tokens · ${formatNumber(attempt.inputTokens)} input tokens · ${formatNumber(attempt.durationSeconds, 1)} s`
+            }),
+            element("pre", {
+              className: "raw-response",
+              text: attempt.response || "No final answer was returned."
+            })
+          );
+        }
+        children.push(details);
+      }
+      return element("section", { className: `answer-panel ${className}` }, children);
+    }
+
+    function renderPair(pair) {
+      const article = element("article", {
+        className: "comparison",
+        id: pair.id,
+        "data-agent": pair.agent,
+        "data-case": pair.caseId
+      });
+      const treatmentData = pair.tlgf || pair.treatment || pair.tlgd || {};
+      article.dataset.search = [
+        pair.agent,
+        pair.caseId,
+        pair.caseMode,
+        pair.difficulty,
+        pair.basePrompt,
+        pair.control.response,
+        treatmentData.response,
+        pair.control.visibleText,
+        treatmentData.visibleText,
+        pair.control.runtimeModel,
+        treatmentData.runtimeModel
+      ].join(" ").toLowerCase();
+
+      article.append(
+        element("header", { className: "comparison-header" }, [
+          element("div", {}, [
+            element("h3", { className: "comparison-title", text: pair.caseId }),
+            element("p", {
+              className: "comparison-subtitle",
+              text: `${pair.agent} · ${pair.difficulty || "standard"} · ${pair.caseMode || "unclassified"} · repetition ${pair.repetition}`
+            })
+          ]),
+          element("div", { className: "pair-deltas" }, [
+            chip(pair.comparable ? "Comparable" : "Diagnostic only", pair.comparable ? "status-pass" : "status-fail"),
+            chip(deltaLabel(pair.wordReduction, "words"), deltaClass(pair.wordReduction)),
+            chip(deltaLabel(pair.outputTokenReduction, "loop tokens"), deltaClass(pair.outputTokenReduction)),
+            chip(deltaLabel(pair.finalStepOutputTokenReduction, "final-step tokens"), deltaClass(pair.finalStepOutputTokenReduction)),
+            chip(deltaLabel(pair.durationReduction, "time"), deltaClass(pair.durationReduction))
+          ])
+        ])
+      );
+
+      const promptDetails = element("details", { open: "" });
+      promptDetails.append(element("summary", { text: "Prompts and review criteria" }));
+      const promptContent = element("div", { className: "prompt-content" });
+      promptContent.append(
+        element("div", { className: "prompt-grid" }, [
+          promptPanel(`${controlLabel} prompt`, pair.control.prompt, "panel-control"),
+          promptPanel(`${treatmentLabel} prompt`, treatmentData.prompt, "panel-tlgf")
+        ])
+      );
+      if (pair.fixture || pair.fixtureSummary) {
+        const fixture = element("section", { className: "criteria" });
+        fixture.append(
+          element("h4", { text: "Fixture" }),
+          element("pre", {
+            className: "prompt-text",
+            text: [pair.fixture, pair.fixtureSummary].filter(Boolean).join("\n\n")
+          })
+        );
+        promptContent.append(fixture);
+      }
+      if (Array.isArray(pair.reviewCriteria) && pair.reviewCriteria.length) {
+        const criteria = element("section", { className: "criteria" });
+        criteria.append(element("h4", { text: "Review criteria" }));
+        const list = element("ul");
+        for (const item of pair.reviewCriteria) list.append(element("li", { text: item }));
+        criteria.append(list);
+        promptContent.append(criteria);
+      }
+      promptDetails.append(promptContent);
+      article.append(promptDetails);
+
+      const side = element("div", { className: "view view-side active" }, [
+        element("div", { className: "answer-grid" }, [
+          answerPanel(controlLabel, pair.control, "panel-control"),
+          answerPanel(treatmentLabel, treatmentData, "panel-tlgf")
+        ])
+      ]);
+      const raw = element("div", { className: "view view-raw" }, [
+        element("div", { className: "answer-grid" }, [
+          rawPanel(`${controlLabel}: raw Markdown`, pair.control, "panel-control"),
+          rawPanel(`${treatmentLabel}: raw Markdown`, treatmentData, "panel-tlgf")
+        ])
+      ]);
+      const diff = element("div", { className: "view view-diff" }, [
+        element("pre", {
+          className: "diff-response",
+          text: pair.diff || "The two responses are identical."
+        })
+      ]);
+      article.append(side, raw, diff);
+      return article;
+    }
+
+    function applyView(article, view) {
+      for (const node of article.querySelectorAll(".view")) node.classList.remove("active");
+      const target = article.querySelector(`.view-${view}`);
+      if (target) target.classList.add("active");
+    }
+
+    function applyFilters() {
+      const query = state.search.trim().toLowerCase();
+      let visible = 0;
+      for (const article of document.querySelectorAll(".comparison")) {
+        const matchesAgent = state.agent === "all" || article.dataset.agent === state.agent;
+        const matchesCase = state.caseId === "all" || article.dataset.case === state.caseId;
+        const matchesSearch = !query || article.dataset.search.includes(query);
+        article.hidden = !(matchesAgent && matchesCase && matchesSearch);
+        if (!article.hidden) visible += 1;
+      }
+      document.getElementById("empty-state").hidden = visible !== 0;
+    }
+
+    function renderControls() {
+      const agent = document.getElementById("agent-filter");
+      const caseFilter = document.getElementById("case-filter");
+      addOption(agent, "all", "All agents");
+      addOption(caseFilter, "all", "All cases");
+      for (const value of report.agents) addOption(agent, value, value);
+      for (const value of report.cases) addOption(caseFilter, value, value);
+
+      agent.addEventListener("change", () => {
+        state.agent = agent.value;
+        applyFilters();
+      });
+      caseFilter.addEventListener("change", () => {
+        state.caseId = caseFilter.value;
+        applyFilters();
+      });
+      document.getElementById("search").addEventListener("input", (event) => {
+        state.search = event.target.value;
+        applyFilters();
+      });
+      for (const button of document.querySelectorAll("[data-global-view]")) {
+        button.addEventListener("click", () => {
+          state.view = button.dataset.globalView;
+          for (const peer of document.querySelectorAll("[data-global-view]")) {
+            peer.setAttribute("aria-pressed", String(peer === button));
+          }
+          for (const article of document.querySelectorAll(".comparison")) {
+            applyView(article, state.view);
+          }
+        });
+      }
+    }
+
+    function render() {
+      renderHeader();
+      renderSummaries();
+      const root = document.getElementById("comparisons");
+      for (const pair of report.pairs) root.append(renderPair(pair));
+      renderControls();
+      applyFilters();
+    }
+
+    render();
+  </script>
+</body>
+</html>

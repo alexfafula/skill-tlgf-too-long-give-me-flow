@@ -1,0 +1,12 @@
+{
+  "run_id": "gamma",
+  "parent_run_id": "beta",
+  "branch": "clarity-fork",
+  "model": "claude-opus-5.0",
+  "prompt_version": "v3",
+  "gates_passed": 6,
+  "gates_total": 6,
+  "attempt_count": 2,
+  "attempt_statuses": ["NO_FINAL_ANSWER", "SUCCESS"],
+  "comparison_role": "cross-model-diagnostic"
+}

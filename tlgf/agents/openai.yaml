@@ -1,0 +1,4 @@
+interface:
+  display_name: "TLGF — Too long! Give me flow!"
+  short_description: "Keep parallel AI work oriented and actionable"
+  default_prompt: "Use $tlgf to show numbered current state, lettered next actions, and any genuine needs-user blocker."
