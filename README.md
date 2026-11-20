@@ -32,24 +32,18 @@ How's the Stripe webhook integration going? $tlgf
 
 Instead of scrolling through screens of logs, the agent replies with:
 
-> **You are here:** Billing › Stripe webhooks › signature verification
->
-> ---
->
-> **What's happening now:**
->
-> 1. Webhook handler and retry logic are implemented in `src/billing/webhooks.ts`.
-> 2. Local test suite passes (14/14), except the replay-protection test which is failing on timestamp drift.
-> 3. Staging webhook secret is still missing from `.env.staging`.
->
-> ---
->
-> **Suggested next steps:**
->
-> A. Fix the timestamp drift check in `webhooks.ts` and re-run the suite *(recommended)*.  
-> B. Skip local replay tests for now and add the staging secret first.
->
-> ---
+<pre>
+<b>You are here:</b> Billing › Stripe webhooks › signature verification
+────────────────────────────────────────────────────────────
+<b>What's happening now:</b>
+1. Webhook handler and retry logic are implemented in <code>src/billing/webhooks.ts</code>.
+2. Local test suite passes (14/14), except the replay-protection test which is failing on timestamp drift.
+3. Staging webhook secret is still missing from <code>.env.staging</code>.
+────────────────────────────────────────────────────────────
+<b>Suggested next steps:</b>
+A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run the suite (recommended).
+B. Skip local replay tests for now and add the staging secret first.
+</pre>
 
 From there, simply reply **`A`** to execute the recommended fix.
 
