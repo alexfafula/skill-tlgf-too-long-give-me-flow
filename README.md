@@ -107,7 +107,7 @@ Add `TLGF` anywhere in your prompt (or `$tlgf` in agents that support skill tags
 
 ```text
 # Pick up an old session
-I just came back to this window. Where does the migration stand and what happens next? TLGF
+Where does this stand and what's next? TLGF
 
 # Resume parked work
 New session. Pick up the parked retry investigation where it stopped. TLGF
