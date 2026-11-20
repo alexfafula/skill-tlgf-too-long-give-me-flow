@@ -20,7 +20,7 @@ When you run several AI sessions in parallel, returning to an older tab usually 
 ### What it looks like
 
 <pre>
-<b>$ How's the Stripe webhook integration going? $tlgf</b>
+<b>you &gt;</b> How's the Stripe webhook integration going? $tlgf
 
 <b>You are here:</b> Billing › Stripe webhooks › signature verification
 ────────────────────────────────────────────────────────────
@@ -33,7 +33,7 @@ When you run several AI sessions in parallel, returning to an older tab usually 
 A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run the suite (recommended).
 B. Skip local replay tests for now and add the staging secret first.
 ────────────────────────────────────────────────────────────
-<b>$ A</b>
+<b>you &gt;</b> A
 </pre>
 
 From there, typing <b><code>A</code></b> immediately kicks off the recommended fix.
