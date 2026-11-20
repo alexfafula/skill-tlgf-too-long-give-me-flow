@@ -1,10 +1,7 @@
 # TLGF — Too Long! Give Me Flow!
 
-**Find where you are when you're lost in a long AI chat. Skip the details, get back into flow.**  
-Turns sprawling agent conversations into a 3-block status frame you can steer by letter or number.
-
-> [!NOTE]
-> TLGF is an independent open-source project by one developer, not affiliated with any AI vendor.
+> **Find where you are when you're lost in a long AI chat. Skip the details, get back into flow.**  
+> Turns sprawling agent conversations into a 3-block status frame you can steer by letter or number.
 
 ---
 
@@ -22,17 +19,9 @@ When you run several AI sessions in parallel, returning to an older tab usually 
 
 ### What it looks like
 
-You return to an ongoing session and type:
-
-```text
-How's the Stripe webhook integration going? $tlgf
-```
-
-*(Or just add `TLGF` anywhere in the prompt.)*
-
-Instead of scrolling through screens of logs, the agent replies with:
-
 <pre>
+<b>$ How's the Stripe webhook integration going? $tlgf</b>
+
 <b>You are here:</b> Billing › Stripe webhooks › signature verification
 ────────────────────────────────────────────────────────────
 <b>What's happening now:</b>
@@ -43,9 +32,11 @@ Instead of scrolling through screens of logs, the agent replies with:
 <b>Suggested next steps:</b>
 A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run the suite (recommended).
 B. Skip local replay tests for now and add the staging secret first.
+────────────────────────────────────────────────────────────
+<b>$ A</b>
 </pre>
 
-From there, simply reply **`A`** to execute the recommended fix.
+From there, typing <b><code>A</code></b> immediately kicks off the recommended fix.
 
 ---
 
@@ -212,3 +203,6 @@ TLGF valid: triptych contract, 12 eval cases
 
 Created by [Aleksander Fafuła](mailto:aleksander@fafula.com).  
 Available under the [MIT License](LICENSE).
+
+> [!NOTE]
+> TLGF is an independent open-source project by one developer, not affiliated with any AI vendor.
