@@ -1,24 +1,18 @@
 <h1 align="center">TLGF</h1>
 
 <p align="center">
-  <em>Too Long! Give Me Flow! &mdash; Control long AI chats like a gamepad.</em>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/format-3%20blocks-111111?style=flat-square" alt="3 blocks">
-  <img src="https://img.shields.io/badge/controls-1--4%20state%20%7C%20A--D%20act-111111?style=flat-square" alt="1-4 state, A-D act">
-  <img src="https://img.shields.io/badge/resumes-2x%20cleaner-111111?style=flat-square" alt="2x cleaner resumes">
+  <img src="https://img.shields.io/github/stars/alexfafula/skill-tlgf-too-long-give-me-flow?style=flat-square&color=111111&label=stars" alt="Stars">
+  <img src="https://img.shields.io/badge/works%20with-Agent%20Skills-111111?style=flat-square" alt="Works with Agent Skills">
   <img src="https://img.shields.io/badge/license-MIT-111111?style=flat-square" alt="MIT license">
 </p>
 
 <p align="center">
-  <img src="assets/gamepad.png" width="880" alt="TLGF: Messy AI chat to back in flow. Control it like a gamepad. Type $tlgf to get 3 short blocks. Press 1-4 to check state, or A-D to act.">
+  <img src="assets/gamepad.png" width="880" alt="TLGF: Messy AI chat to back in flow. Control it like a gamepad. Type $tlgf to turn a long chat into 3 blocks. Press 1-4 to check state, or A-D to act.">
 </p>
 
 <p align="center">
-  <strong>Messy AI chat &rarr; back in flow. Type <code>$tlgf</code>. Get 3 short blocks. Press one key to move.</strong><br>
   <strong>2&times; more clean resumes (34/45 vs 17/45) &middot; 15/15 on Claude Code &middot; up to &minus;71% less reading</strong><br>
-  <sub>Paired benchmark across Claude Code (<code>claude-opus-5</code>), Agy (<code>gemini-3.7-flash-high</code>), and Codex CLI (<code>gpt-5.6-sol</code>). <a href="#numbers">Details</a>.</sub>
+  <sub><a href="#install">Install</a> &middot; <a href="#controls">Cheat sheet</a> &middot; <a href="#numbers">Benchmark</a></sub>
 </p>
 
 ---
@@ -31,7 +25,7 @@ When you run several AI tabs at once, coming back to an older chat usually means
 - **What's happening now (`1–4`)** — what's done, what's running, what's blocked.
 - **Suggested next steps (`A–D`)** — concrete options, recommended one first.
 
-**Numbers inspect state. Letters act.**
+**Numbers check state. Letters act.**
 
 ---
 
@@ -63,51 +57,11 @@ B. Skip local replay tests for now and add the staging secret first.
 
 </details>
 
-Typing **`A`** runs the recommended fix directly—no repeating context, no replaying the frame.
-
----
-
-## Controls
-
-Use the latest frame like a gamepad (**`1–4` = check state**, **`A–D` = run next step**):
-
-| You type | TLGF does |
-| :--- | :--- |
-| `2` or `expand 2` | Expands only status point 2. |
-| `B` or `do B` | Picks or runs step B (when safe and allowed). |
-| `B vs C` | Compares only the real difference between B and C. |
-| `park 4` | Saves point 4 as an inactive lead with evidence and when to revisit it. |
-| `fork 3` | Switches active work to point 3 and leaves a resume note for the current thread. |
-| `deep dive 2` | Investigates point 2 while keeping a clear path back. |
-| `refresh` | Rebuilds the frame from current files and logs. |
-
-*Natural phrasing in any language works the same way. If there is no frame yet, TLGF builds one instead of guessing.*
-
-When the agent literally cannot continue without you—a decision, secret, approval, or missing info—the frame starts with **⛔ Needs you**. Otherwise that banner stays hidden so it actually means something across open tabs.
-
----
-
-## Numbers
-
-<p align="center">
-  <img src="assets/benchmark-gates.png" width="880" alt="Paired benchmark across 3 agents: TLGF passes 34/45 (76%) vs 17/45 (38%) control. Claude Code 15/15 vs 5/15, Agy 10/15 vs 7/15, Codex CLI 9/15 vs 5/15.">
-</p>
-
-<p align="center">
-  <img src="assets/benchmark-impact.png" width="880" alt="Fact coverage and word reduction: 94-95% expected facts kept vs 77-84% control; up to -71% fewer words on Claude Code 1-key follow-ups.">
-</p>
-
-Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BENCHMARK.md):
-
-- **2× more clean resumes:** 34/45 (76%) with TLGF vs 17/45 (38%) without it across 90 paired runs. On Claude Code, TLGF nailed 15/15 messy resumes (vs 5/15 without) while cutting response length by 13–71% on 4 of 5 cases.
-- **Why agents break without it:** When you jump back into an old thread, default agents fail 62% of the time—replaying the whole status on a 1-letter `B`, missing stale saved state or hidden retries, and burying blockers.
-- **Less reading, almost nothing missed:** Blind judges scored TLGF at 94–95% of critical facts kept (vs 77–84% without), with higher scores on knowing where you are (1.89–1.94/2) and what to do next (1.74–1.80/2).
-
 ---
 
 ## Install
 
-Install globally using the open-source [`skills` CLI](https://github.com/vercel-labs/skills):
+Install globally in one command using the open-source [`skills` CLI](https://github.com/vercel-labs/skills):
 
 ```shell
 npx skills@latest add https://github.com/alexfafula/skill-tlgf-too-long-give-me-flow/tree/main/tlgf -g -y -a <agent>
@@ -124,9 +78,19 @@ npx skills@latest add https://github.com/alexfafula/skill-tlgf-too-long-give-me-
 | **Cline** | `-a cline` |
 | **OpenCode** | `-a opencode` |
 
-*Works with any agent supporting the [Agent Skills specification](https://agentskills.io).*
+Then type `TLGF` or `$tlgf` anywhere in a prompt:
 
-### Try without installing
+```text
+$tlgf                         # instant status & next steps
+resume retry fix $tlgf        # pick up parked work
+status + test command $tlgf   # status + a deliverable
+gdzie jesteśmy? $tlgf         # works in any language
+```
+
+<details>
+<summary>Try without installing, update, or use without skill triggering</summary>
+
+### Try for one session
 
 ```shell
 # Claude Code
@@ -142,25 +106,53 @@ npx skills@latest use https://github.com/alexfafula/skill-tlgf-too-long-give-me-
 npx skills@latest update tlgf
 ```
 
+### Use without skill triggering
+
+- **Claude Code output style:** Copy `adapters/claude/output-styles/tlgf.md` to `~/.claude/output-styles/` (or `.claude/output-styles/`), then run `/output-style TLGF` or set `"outputStyle": "TLGF"` in `settings.json`.
+- **`AGENTS.md` block:** Paste `adapters/agents/tlgf.md` into your `AGENTS.md` (or equivalent rules file).
+
+</details>
+
 ---
 
-## Usage
+## Controls
 
-Add `TLGF` anywhere in your prompt (or `$tlgf` where skill tags are supported):
+<p align="center">
+  <img src="assets/cheatsheet.png" width="880" alt="TLGF Gamepad Cheat Sheet: 1-4 D-pad commands for state (expand, park, fork, deep dive, refresh), A-D buttons for actions (A, B, B vs C, no frame replay), and the Needs you semaphore banner.">
+</p>
 
-```text
-# Instant status & next steps
-$tlgf
+<details>
+<summary>Text reference</summary>
 
-# Resume parked work
-resume retry fix $tlgf
+| You type | TLGF does |
+| :--- | :--- |
+| `2` or `expand 2` | Expands only status point 2. |
+| `B` or `do B` | Picks or runs step B (when safe and allowed). |
+| `B vs C` | Compares only the real difference between B and C. |
+| `park 4` | Saves point 4 as an inactive lead with evidence and when to revisit it. |
+| `fork 3` | Switches active work to point 3 and leaves a resume note for the current thread. |
+| `deep dive 2` | Investigates point 2 while keeping a clear path back. |
+| `refresh` | Rebuilds the frame from current files and logs. |
 
-# Status + deliverable
-status + test command $tlgf
+</details>
 
-# Any language
-gdzie jesteśmy? $tlgf
-```
+---
+
+## Numbers
+
+<p align="center">
+  <img src="assets/benchmark-gates.png" width="880" alt="Paired benchmark across 3 agents: TLGF nails 34/45 (76%) clean resumes vs 17/45 (38%) without it. Claude Code 15/15 vs 5/15, Agy 10/15 vs 7/15, Codex CLI 9/15 vs 5/15.">
+</p>
+
+<p align="center">
+  <img src="assets/benchmark-impact.png" width="880" alt="Speed and accuracy: 94-95% critical facts kept vs 77-84% without TLGF; up to -71% less reading on Claude Code 1-key actions.">
+</p>
+
+Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BENCHMARK.md):
+
+- **2× more clean resumes:** 34/45 (76%) with TLGF vs 17/45 (38%) without it across 90 paired runs. On Claude Code, TLGF nailed 15/15 messy resumes (vs 5/15 without) while cutting response length by 13–71% on 4 of 5 cases.
+- **Why agents break without it:** When you jump back into an old thread, default agents fail 62% of the time—replaying the whole status on a 1-letter `B`, missing stale saved state or hidden retries, and burying blockers.
+- **Less reading, almost nothing missed:** Blind judges scored TLGF at 94–95% of critical facts kept (vs 77–84% without), with higher scores on knowing where you are (1.89–1.94/2) and what to do next (1.74–1.80/2).
 
 ---
 
@@ -170,27 +162,26 @@ gdzie jesteśmy? $tlgf
 - **Numbers stay attached to context:** Results keep their run ID, model, retry state, or data limits.
 - **No hidden retries:** If a task needed a retry to pass, say so—don't hide the first failure.
 - **Real progress only:** Work is "running" only while it's actually running. Use real counts or milestones, never fake percentages.
-- **Portable paths:** Local files use repo-relative paths, never `file://` links.
-- **No meta-chatter:** Replies never echo `TLGF` or explain how the skill works.
+- **Keep state between sessions:** When writes are allowed, TLGF keeps a tiny restart index in `.tlgf/STATE.md` and verifies it against your real branch and files before trusting it. Secrets and raw logs are never written there.
+- **Portable paths & no meta-chatter:** Repo-relative paths only (no `file://` URLs), and replies never echo `TLGF` or explain how the skill works.
 
 ---
 
-## Keep state between sessions
+## FAQ
 
-When file writes are allowed, TLGF keeps a tiny restart index in `.tlgf/STATE.md` (current position, state, resume step, decisions, parked leads). On resume, it checks that file against your actual branch, files, and results before trusting it. Secrets, raw logs, and private chat are never saved there.
+**Does it hijack normal questions?**  
+No. Without `TLGF` / `$tlgf`, standalone questions ("what does idempotent mean in HTTP?") get a plain answer with no frame.
 
----
+**Does it work in Polish or other languages?**  
+Yes. Labels (`You are here`, `What's happening now`, `Suggested next steps`, `⛔ Needs you`) render naturally in your language while keeping code, branches, and file paths untouched.
 
-## Use without skill triggering
-
-If your tool doesn't load skills automatically, two adapters apply the exact same rules:
-
-- **Claude Code output style:** Copy `adapters/claude/output-styles/tlgf.md` to `~/.claude/output-styles/` (or `.claude/output-styles/`), then run `/output-style TLGF` or set `"outputStyle": "TLGF"` in `settings.json`.
-- **`AGENTS.md` block:** Paste `adapters/agents/tlgf.md` into your `AGENTS.md` (or equivalent rules file).
+**What if my agent doesn't support skills?**  
+Copy `adapters/agents/tlgf.md` into your `AGENTS.md` (or use `adapters/claude/output-styles/tlgf.md` for Claude Code). Same rules, zero setup.
 
 ---
 
-## Repo layout & local check
+<details>
+<summary>Repo layout & local validation</summary>
 
 ```text
 skill-tlgf-too-long-give-me-flow/
@@ -205,7 +196,7 @@ skill-tlgf-too-long-give-me-flow/
 │   ├── scripts/check.py         Package validator
 │   └── LICENSE.txt              License shipped with installed copies
 ├── adapters/                    Claude Code output style and AGENTS.md block
-├── assets/                      README visuals (gamepad, before/after, benchmarks)
+├── assets/                      README visuals + assets/render.py generator
 ├── benchmarks/                  Paired control-vs-TLGF harness, judge, and reports
 ├── docs/                        Product contract and forward tests
 ├── TLGF_BENCHMARK.md            Benchmark method and full results
@@ -217,13 +208,10 @@ Validate the local skill package:
 
 ```shell
 python3 tlgf/scripts/check.py
+# Expected: TLGF valid: triptych contract, 12 eval cases
 ```
 
-Expected output:
-
-```text
-TLGF valid: triptych contract, 12 eval cases
-```
+</details>
 
 ---
 
