@@ -209,7 +209,7 @@ GAMEPAD_HTML = f"""<!doctype html>
   <div class="right-panel">
     <div class="pill mono"><span class="dot"></span> TOO LONG! GIVE ME FLOW!</div>
     <div class="hero-name mono">TLGF<span>.</span></div>
-    <div class="tagline">Messy AI chat &rarr; back in flow.<br>Control it like a gamepad.</div>
+    <div class="tagline">AI talks too much.<br>Back to flow &mdash; like a gamepad.</div>
     <div class="subtag">Type <span class="mono" style="color:#f0ece4;">$tlgf</span> to turn a long chat into 3 blocks. Press a number to check state, or a letter to act.</div>
 
     <div class="stats mono">

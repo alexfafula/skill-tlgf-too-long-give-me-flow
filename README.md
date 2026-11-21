@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/gamepad.png" width="880" alt="TLGF: Messy AI chat to back in flow. Control it like a gamepad. Type $tlgf to turn a long chat into 3 blocks. Press 1-4 to check state, or A-D to act.">
+  <img src="assets/gamepad.png" width="880" alt="TLGF: AI talks too much. Back to flow — like a gamepad. Type $tlgf to turn a long chat into 3 blocks. Press 1-4 to check state, or A-D to act.">
 </p>
 
 <p align="center">
