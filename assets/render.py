@@ -47,11 +47,13 @@ GAMEPAD_HTML = f"""<!doctype html>
   }}
   .left-panel {{ display: flex; flex-direction: column; }}
   .pad-card {{
-    background: linear-gradient(180deg, #171513 0%, #11100e 100%);
-    border: 1.5px solid #2b2723;
+    background:
+      linear-gradient(180deg, #211f1c 0%, #161412 100%) padding-box,
+      linear-gradient(125deg, rgba(124,196,250,0.68) 0%, rgba(160,155,148,0.28) 50%, rgba(110,231,183,0.68) 100%) border-box;
+    border: 1.5px solid transparent;
     border-radius: 22px;
     padding: 20px 22px 18px;
-    box-shadow: 0 22px 50px rgba(0,0,0,0.6);
+    box-shadow: 0 24px 55px rgba(0,0,0,0.75), 0 0 36px rgba(124,196,250,0.07), 0 0 36px rgba(110,231,183,0.07);
   }}
   .pad-labels {{
     display: grid;
@@ -159,7 +161,7 @@ GAMEPAD_HTML = f"""<!doctype html>
 
       <div class="pad-row">
         <svg width="138" height="138" viewBox="0 0 144 144">
-          <circle cx="72" cy="72" r="68" fill="#0d0c0b" stroke="#282420" stroke-width="1.5"/>
+          <circle cx="72" cy="72" r="68" fill="#0d0c0b" stroke="#3c3731" stroke-width="1.5"/>
           <path d="M51 16 H93 V51 H128 V93 H93 V128 H51 V93 H16 V51 H51 Z"
                 fill="#1d1b18" stroke="#34302b" stroke-width="1.5" stroke-linejoin="round"/>
           <circle cx="72" cy="72" r="9" fill="#11100e"/>
@@ -182,7 +184,7 @@ GAMEPAD_HTML = f"""<!doctype html>
         </div>
 
         <svg width="138" height="138" viewBox="0 0 144 144">
-          <circle cx="72" cy="72" r="68" fill="#0d0c0b" stroke="#282420" stroke-width="1.5"/>
+          <circle cx="72" cy="72" r="68" fill="#0d0c0b" stroke="#3c3731" stroke-width="1.5"/>
           <circle cx="72" cy="34" r="18" fill="#1e1c19" stroke="#453f39" stroke-width="1.4"/>
           <text x="72" y="39" text-anchor="middle" font-family="SF Mono, ui-monospace, monospace" font-size="14" font-weight="800" fill="#c4bdb5">D</text>
           <circle cx="34" cy="72" r="18" fill="#1e1c19" stroke="#453f39" stroke-width="1.4"/>
@@ -268,16 +270,21 @@ BEFOREAFTER_HTML = f"""<!doctype html>
     gap: 22px;
   }}
   .card {{
-    background: #141311;
+    background:
+      linear-gradient(180deg, #1b1917 0%, #141311 100%) padding-box,
+      linear-gradient(135deg, rgba(248,113,113,0.42) 0%, rgba(120,114,106,0.22) 100%) border-box;
     border-radius: 16px;
-    border: 1.5px solid #262320;
+    border: 1.5px solid transparent;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }}
   .card.after {{
-    border-color: rgba(110, 231, 183, 0.35);
-    background: #121413;
+    background:
+      linear-gradient(180deg, #161b19 0%, #121514 100%) padding-box,
+      linear-gradient(125deg, rgba(124,196,250,0.65) 0%, rgba(110,231,183,0.68) 100%) border-box;
+    border: 1.5px solid transparent;
+    box-shadow: 0 0 32px rgba(110,231,183,0.08), 0 0 28px rgba(124,196,250,0.06);
   }}
   .card-head {{
     display: flex;
@@ -431,10 +438,19 @@ CHEATSHEET_HTML = f"""<!doctype html>
     margin-bottom: 18px;
   }}
   .box {{
-    background: #141311;
-    border: 1.5px solid #262320;
+    background:
+      linear-gradient(180deg, #1d1b18 0%, #141311 100%) padding-box,
+      linear-gradient(135deg, rgba(124,196,250,0.58) 0%, rgba(120,114,106,0.22) 100%) border-box;
+    border: 1.5px solid transparent;
     border-radius: 15px;
     padding: 16px 20px 14px;
+    box-shadow: 0 0 26px rgba(124,196,250,0.05);
+  }}
+  .box.act {{
+    background:
+      linear-gradient(180deg, #181c1a 0%, #131514 100%) padding-box,
+      linear-gradient(135deg, rgba(110,231,183,0.58) 0%, rgba(120,114,106,0.22) 100%) border-box;
+    box-shadow: 0 0 26px rgba(110,231,183,0.06);
   }}
   .box-head {{
     display: flex;
@@ -530,7 +546,7 @@ CHEATSHEET_HTML = f"""<!doctype html>
     </div>
 
     <!-- Right: Buttons act -->
-    <div class="box">
+    <div class="box act">
       <div class="box-head green">
         <span>BUTTONS &middot; A&ndash;D</span>
         <span class="dim">move forward in 1 key</span>
@@ -608,12 +624,23 @@ BENCHMARK_GATES_HTML = f"""<!doctype html>
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }}
-  .rows {{ display: flex; flex-direction: column; gap: 22px; }}
+  .rows {{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background:
+      linear-gradient(180deg, #191816 0%, #131210 100%) padding-box,
+      linear-gradient(125deg, rgba(124,196,250,0.58) 0%, rgba(160,155,148,0.22) 50%, rgba(110,231,183,0.58) 100%) border-box;
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 0 28px rgba(124,196,250,0.05), 0 0 28px rgba(110,231,183,0.05);
+  }}
   .row {{
     display: grid;
-    grid-template-columns: 235px 1fr;
+    grid-template-columns: 220px 1fr;
     align-items: center;
-    gap: 20px;
+    gap: 18px;
   }}
   .r-label {{ font-size: 14px; font-weight: 600; color: #f0ece4; }}
   .r-sub {{ font-size: 11px; color: #7d776f; margin-top: 2px; }}
@@ -777,13 +804,22 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
   .title .green {{ color: #6ee7b7; }}
   .two-col {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }}
   .panel {{
-    background: #141311;
-    border: 1.5px solid #262320;
+    background:
+      linear-gradient(180deg, #181c1a 0%, #131514 100%) padding-box,
+      linear-gradient(135deg, rgba(110,231,183,0.55) 0%, rgba(124,196,250,0.28) 100%) border-box;
+    border: 1.5px solid transparent;
     border-radius: 16px;
     padding: 20px 22px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 0 26px rgba(110,231,183,0.05);
+  }}
+  .panel.blue-panel {{
+    background:
+      linear-gradient(180deg, #171a1d 0%, #131416 100%) padding-box,
+      linear-gradient(135deg, rgba(124,196,250,0.55) 0%, rgba(110,231,183,0.28) 100%) border-box;
+    box-shadow: 0 0 26px rgba(124,196,250,0.06);
   }}
   .p-head {{
     font-size: 11px;
@@ -873,7 +909,7 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
       </div>
     </div>
 
-    <div class="panel">
+    <div class="panel blue-panel">
       <div>
         <div class="p-head">LESS READING ON CLAUDE CODE</div>
         <div class="big-stat">
@@ -966,7 +1002,7 @@ TARGETS = [
     ("gamepad", GAMEPAD_HTML, 960, 445, 2),
     ("beforeafter", BEFOREAFTER_HTML, 960, 580, 2),
     ("cheatsheet", CHEATSHEET_HTML, 960, 490, 2),
-    ("benchmark-gates", BENCHMARK_GATES_HTML, 960, 515, 2),
+    ("benchmark-gates", BENCHMARK_GATES_HTML, 960, 550, 2),
     ("benchmark-impact", BENCHMARK_IMPACT_HTML, 960, 470, 2),
     ("social-preview", SOCIAL_HTML, 1280, 640, 1),
 ]
