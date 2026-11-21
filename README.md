@@ -124,7 +124,7 @@ gdzie jesteśmy? $tlgf
 
 - **Single focus:** Only one active thread stays visible; parked work appears only when it affects the current path.
 - **Context with results:** Metrics and findings stay tied to the conditions needed to read them (run ID, model, retry state, or data limits).
-- **Honest retries:** A pass after a retry is reported as recovered evidence, never as proof of first-attempt reliability.
+- **No hidden retries:** If a task needed a retry to pass, report the retry—don't hide the initial failure.
 - **Real progress:** Work is described as running only while it's actually running. Progress uses real counts or named milestones, never manufactured percentages.
 - **Portable paths:** Local artifacts use repository-relative paths, never `file://` URLs.
 - **No meta-chatter:** Replies never echo the `TLGF` trigger or explain how the skill works.
