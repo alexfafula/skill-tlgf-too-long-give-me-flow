@@ -176,8 +176,8 @@ Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BE
 **Does it hijack normal questions?**  
 No. Without `TLGF` / `$tlgf`, standalone questions ("what does idempotent mean in HTTP?") get a plain answer with no frame.
 
-**Does it work in Polish or other languages?**  
-Yes. Labels (`You are here`, `What's happening now`, `Suggested next steps`, `⛔ Needs you`) render naturally in your language while keeping code, branches, and file paths untouched.
+**Does it work in other languages?**  
+Yes—Spanish, French, Chinese, Japanese, German, Polish, or whatever you write in. Labels (`You are here`, `What's happening now`, `Suggested next steps`, `⛔ Needs you`) render naturally in your language while keeping code, branches, and file paths untouched.
 
 **What if my agent doesn't support skills?**  
 Copy `adapters/agents/tlgf.md` into your `AGENTS.md` (or use `adapters/claude/output-styles/tlgf.md` for Claude Code). Same rules, zero setup.
