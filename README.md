@@ -55,7 +55,7 @@ Reference items from the latest frame by number or letter without repeating cont
 
 *Natural phrasing in your own language works the same way. If there is no active frame yet, TLGF builds one instead of guessing.*
 
-When work is blocked on something only you can provide—a decision, credentials, a secret, or external info—the frame starts with `⛔ **Needs you**`. Otherwise, that banner is omitted so it stays meaningful across multiple open tabs.
+When work is blocked on something only you can provide—a decision, credentials, a secret, or external info—the frame starts with **⛔ Needs you**. Otherwise, that banner is omitted so it stays meaningful across multiple open tabs.
 
 ---
 
