@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/gamepad.png" width="880" alt="TLGF: AI talks too much. Back to flow — like a gamepad. Type $tlgf to turn a long chat into 3 blocks. Press 1-4 to check state, or A-D to act.">
+  <img src="assets/gamepad.png" width="880" alt="TLGF: AI talks too much. Back to flow - like a gamepad. Type $tlgf to turn a long chat into 3 blocks. Press 1-4 to check state, or A-D to act.">
 </p>
 
 <p align="center">
@@ -25,9 +25,9 @@ When you run several AI tabs at once, coming back to an older chat usually means
 
 **TLGF** replaces that wall of text with the same 3-block frame every time:
 
-- **You are here** — project, thread, and current step in one line.
-- **What's happening now (`1–4`)** — what's done, what's running, what's blocked.
-- **Suggested next steps (`A–D`)** — concrete options, recommended one first.
+- **You are here** - project, thread, and current step in one line.
+- **What's happening now (`1-4`)** - what's done, what's running, what's blocked.
+- **Suggested next steps (`A-D`)** - concrete options, recommended one first.
 
 **Numbers check state. Letters act.**
 
@@ -154,9 +154,9 @@ npx skills@latest update tlgf
 
 Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BENCHMARK.md):
 
-- **2× more clean resumes:** 34/45 (76%) with TLGF vs 17/45 (38%) without it across 90 paired runs. On Claude Code, TLGF nailed 15/15 messy resumes (vs 5/15 without) while cutting response length by 13–71% on 4 of 5 cases.
-- **Why agents break without it:** When you jump back into an old thread, default agents fail 62% of the time—replaying the whole status on a 1-letter `B`, missing stale saved state or hidden retries, and burying blockers.
-- **Less reading, almost nothing missed:** Blind judges scored TLGF at 94–95% of critical facts kept (vs 77–84% without), with higher scores on knowing where you are (1.89–1.94/2) and what to do next (1.74–1.80/2).
+- **2× more clean resumes:** 34/45 (76%) with TLGF vs 17/45 (38%) without it across 90 paired runs. On Claude Code, TLGF nailed 15/15 messy resumes (vs 5/15 without) while cutting response length by 13-71% on 4 of 5 cases.
+- **Why agents break without it:** When you jump back into an old thread, default agents fail 62% of the time - replaying the whole status on a 1-letter `B`, missing stale saved state or hidden retries, and burying blockers.
+- **Less reading, almost nothing missed:** Blind judges scored TLGF at 94-95% of critical facts kept (vs 77-84% without), with higher scores on knowing where you are (1.89-1.94/2) and what to do next (1.74-1.80/2).
 
 ---
 
@@ -164,7 +164,7 @@ Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BE
 
 - **One thread at a time:** Only the active work stays visible; parked work shows up only if it affects the current path.
 - **Numbers stay attached to context:** Results keep their run ID, model, retry state, or data limits.
-- **No hidden retries:** If a task needed a retry to pass, say so—don't hide the first failure.
+- **No hidden retries:** If a task needed a retry to pass, say so - don't hide the first failure.
 - **Real progress only:** Work is "running" only while it's actually running. Use real counts or milestones, never fake percentages.
 - **Keep state between sessions:** When writes are allowed, TLGF keeps a tiny restart index in `.tlgf/STATE.md` and verifies it against your real branch and files before trusting it. Secrets and raw logs are never written there.
 - **Portable paths & no meta-chatter:** Repo-relative paths only (no `file://` URLs), and replies never echo `TLGF` or explain how the skill works.
@@ -177,7 +177,7 @@ Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BE
 No. Without `TLGF` / `$tlgf`, standalone questions ("what does idempotent mean in HTTP?") get a plain answer with no frame.
 
 **Does it work in other languages?**  
-Yes—Spanish, French, Chinese, Japanese, German, Polish, or whatever you write in. Labels (`You are here`, `What's happening now`, `Suggested next steps`, `⛔ Needs you`) render naturally in your language while keeping code, branches, and file paths untouched.
+Yes - Spanish, French, Chinese, Japanese, German, Polish, or whatever you write in. Labels (`You are here`, `What's happening now`, `Suggested next steps`, `⛔ Needs you`) render naturally in your language while keeping code, branches, and file paths untouched.
 
 **What if my agent doesn't support skills?**  
 Copy `adapters/agents/tlgf.md` into your `AGENTS.md` (or use `adapters/claude/output-styles/tlgf.md` for Claude Code). Same rules, zero setup.
@@ -222,7 +222,7 @@ python3 tlgf/scripts/check.py
 ## License
 
 Created by [Aleksander Fafuła](mailto:aleksander@fafula.com).  
-MIT License — see [LICENSE](LICENSE).
+MIT License - see [LICENSE](LICENSE).
 
 > [!NOTE]
 > Independent open-source project by one developer, not affiliated with any AI vendor.

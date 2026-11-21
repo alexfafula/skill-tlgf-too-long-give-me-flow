@@ -209,7 +209,7 @@ GAMEPAD_HTML = f"""<!doctype html>
   <div class="right-panel">
     <div class="pill mono"><span class="dot"></span> TOO LONG! GIVE ME FLOW!</div>
     <div class="hero-name mono">TLGF<span>.</span></div>
-    <div class="tagline">AI talks too much.<br>Back to flow &mdash; like a gamepad.</div>
+    <div class="tagline">AI talks too much.<br>Back to flow - like a gamepad.</div>
     <div class="subtag">Type <span class="mono" style="color:#f0ece4;">$tlgf</span> to turn a long chat into 3 blocks. Press a number to check state, or a letter to act.</div>
 
     <div class="stats mono">
@@ -218,11 +218,11 @@ GAMEPAD_HTML = f"""<!doctype html>
         <div class="stat-lbl">short blocks</div>
       </div>
       <div>
-        <div class="stat-val blue">1&ndash;4</div>
+        <div class="stat-val blue">1-4</div>
         <div class="stat-lbl">D-pad: state</div>
       </div>
       <div>
-        <div class="stat-val green">A&ndash;D</div>
+        <div class="stat-val green">A-D</div>
         <div class="stat-lbl">buttons: act</div>
       </div>
     </div>
@@ -513,14 +513,14 @@ CHEATSHEET_HTML = f"""<!doctype html>
 <body>
   <div>
     <div class="eyebrow mono">GAMEPAD CHEAT SHEET &middot; ANY LANGUAGE WORKS</div>
-    <div class="title mono"><span class="blue">1&ndash;4</span> check state. <span class="green">A&ndash;D</span> act. Zero re-explaining.</div>
+    <div class="title mono"><span class="blue">1-4</span> check state. <span class="green">A-D</span> act. Zero re-explaining.</div>
   </div>
 
   <div class="cols mono">
     <!-- Left: D-Pad state -->
     <div class="box">
       <div class="box-head blue">
-        <span>D-PAD &middot; 1&ndash;4</span>
+        <span>D-PAD &middot; 1-4</span>
         <span class="dim">inspect &amp; manage state</span>
       </div>
       <div class="cmd-row">
@@ -548,7 +548,7 @@ CHEATSHEET_HTML = f"""<!doctype html>
     <!-- Right: Buttons act -->
     <div class="box act">
       <div class="box-head green">
-        <span>BUTTONS &middot; A&ndash;D</span>
+        <span>BUTTONS &middot; A-D</span>
         <span class="dim">move forward in 1 key</span>
       </div>
       <div class="cmd-row">
@@ -588,7 +588,7 @@ CHEATSHEET_HTML = f"""<!doctype html>
 """
 
 # ==============================================================================
-# 4. BENCHMARK 1/2 — Clean Resumptions
+# 4. BENCHMARK 1/2 - Clean Resumptions
 # ==============================================================================
 BENCHMARK_GATES_HTML = f"""<!doctype html>
 <html>
@@ -769,7 +769,7 @@ BENCHMARK_GATES_HTML = f"""<!doctype html>
 """
 
 # ==============================================================================
-# 5. BENCHMARK 2/2 — Speed & Accuracy
+# 5. BENCHMARK 2/2 - Speed & Accuracy
 # ==============================================================================
 BENCHMARK_IMPACT_HTML = f"""<!doctype html>
 <html>
@@ -868,8 +868,8 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
       <div>
         <div class="p-head">CRITICAL FACTS KEPT</div>
         <div class="big-stat">
-          <div class="big-num green">94&ndash;95%</div>
-          <div class="big-sub">vs 77&ndash;84% no skill</div>
+          <div class="big-num green">94-95%</div>
+          <div class="big-sub">vs 77-84% no skill</div>
         </div>
       </div>
 
@@ -877,7 +877,7 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
         <div class="item">
           <div class="item-top">
             <span class="item-name">Claude Code</span>
-            <span class="item-val"><span class="muted">88&ndash;90% &rarr;</span> <span class="g">100%</span></span>
+            <span class="item-val"><span class="muted">88-90% &rarr;</span> <span class="g">100%</span></span>
           </div>
           <div class="mini-bars">
             <div class="mb ctrl" style="width: 89%;"></div>
@@ -888,7 +888,7 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
         <div class="item">
           <div class="item-top">
             <span class="item-name">Agy</span>
-            <span class="item-val"><span class="muted">79&ndash;84% &rarr;</span> <span class="g">90&ndash;96%</span></span>
+            <span class="item-val"><span class="muted">79-84% &rarr;</span> <span class="g">90-96%</span></span>
           </div>
           <div class="mini-bars">
             <div class="mb ctrl" style="width: 82%;"></div>
@@ -899,7 +899,7 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
         <div class="item">
           <div class="item-top">
             <span class="item-name">Codex CLI</span>
-            <span class="item-val"><span class="muted">64&ndash;77% &rarr;</span> <span class="g">89&ndash;91%</span></span>
+            <span class="item-val"><span class="muted">64-77% &rarr;</span> <span class="g">89-91%</span></span>
           </div>
           <div class="mini-bars">
             <div class="mb ctrl" style="width: 71%;"></div>
@@ -956,7 +956,7 @@ BENCHMARK_IMPACT_HTML = f"""<!doctype html>
   </div>
 
   <div class="foot mono">
-    <span>Blind judges: knowing where you are 1.89&ndash;1.94/2 (vs 1.58&ndash;1.62) &middot; next move 1.74&ndash;1.80/2 (vs 1.26&ndash;1.43)</span>
+    <span>Blind judges: knowing where you are 1.89-1.94/2 (vs 1.58-1.62) &middot; next move 1.74-1.80/2 (vs 1.26-1.43)</span>
     <span>TLGF_BENCHMARK.md</span>
   </div>
 </body>
