@@ -105,7 +105,7 @@ npx skills@latest update tlgf
 Add `TLGF` anywhere in your prompt (or `$tlgf` in agents that support skill tags):
 
 ```text
-# Quick status and decision (trigger only)
+# Find where you are and decide what's next
 $tlgf
 # or
 TLGF
