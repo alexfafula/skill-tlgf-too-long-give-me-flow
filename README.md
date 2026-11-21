@@ -1,7 +1,6 @@
 # TLGF — Too Long! Give Me Flow!
 
-> **Find where you are when you're lost in a long AI chat. Skip the details, get back into flow.**  
-> Turns sprawling agent conversations into a 3-block status frame you can steer by letter or number.
+> **Find where you are when you're lost in a long AI chat. Skip the details, get back into flow.**
 
 ---
 
@@ -20,7 +19,7 @@ When you run several AI sessions in parallel, returning to an older tab usually 
 ### What it looks like
 
 <pre>
-<b>you &gt;</b> How's the Stripe webhook integration going? $tlgf
+<b>you &gt;</b> <ins><b>How's the Stripe webhook integration going? $tlgf</b></ins>
 
 <b>You are here:</b> Billing › Stripe webhooks › signature verification
 ────────────────────────────────────────────────────────────
@@ -33,14 +32,14 @@ When you run several AI sessions in parallel, returning to an older tab usually 
 A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run the suite (recommended).
 B. Skip local replay tests for now and add the staging secret first.
 ────────────────────────────────────────────────────────────
-<b>you &gt;</b> A
+<b>you &gt;</b> <ins><b>A</b></ins>
 </pre>
 
 From there, typing <b><code>A</code></b> immediately kicks off the recommended fix.
 
 ---
 
-## How to steer the frame
+## Frame controls
 
 Reference items from the latest frame by number or letter without repeating context:
 
