@@ -105,28 +105,17 @@ npx skills@latest update tlgf
 Add `TLGF` anywhere in your prompt (or `$tlgf` in agents that support skill tags):
 
 ```text
-# Find where you are and decide what's next
+# Instant status & next steps
 $tlgf
-# or
-TLGF
-
-# Pick up an old session
-Where does this stand and what's next? TLGF
 
 # Resume parked work
-New session. Pick up the parked retry investigation where it stopped. TLGF
+resume retry fix $tlgf
 
-# Hand work off to a teammate
-I'm handing this branch to Dana tomorrow. Give her the frame. TLGF
+# Status + deliverable
+status + test command $tlgf
 
-# Request a deliverable alongside the status
-Status, then the exact command to rerun the failing suite. TLGF
-
-# Multilingual support (labels adapt naturally, identifiers stay exact)
-Wracam do tego okna po przerwie. Gdzie jestem i co dalej? TLGF
-
-# Standalone question (stays out of the way, answers without the frame)
-What does idempotent mean? TLGF
+# Any language
+gdzie jesteśmy? $tlgf
 ```
 
 ---
