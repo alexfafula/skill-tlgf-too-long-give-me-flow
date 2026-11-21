@@ -1,6 +1,10 @@
 <h1 align="center">TLGF</h1>
 
 <p align="center">
+  <em>Too Long! Give Me Flow!</em>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/github/stars/alexfafula/skill-tlgf-too-long-give-me-flow?style=flat-square&color=111111&label=stars" alt="Stars">
   <img src="https://img.shields.io/badge/works%20with-Agent%20Skills-111111?style=flat-square" alt="Works with Agent Skills">
   <img src="https://img.shields.io/badge/license-MIT-111111?style=flat-square" alt="MIT license">
