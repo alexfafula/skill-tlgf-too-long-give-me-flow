@@ -1,67 +1,113 @@
-# TLGF — Too Long! Give Me Flow!
+<h1 align="center">TLGF</h1>
 
-> **Find where you are when you're lost in a long AI chat. Skip the details, get back into flow.**
+<p align="center">
+  <em>Too Long! Give Me Flow! &mdash; Control long AI chats like a gamepad.</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/format-3%20blocks-111111?style=flat-square" alt="3 blocks">
+  <img src="https://img.shields.io/badge/controls-1--4%20state%20%7C%20A--D%20act-111111?style=flat-square" alt="1-4 state, A-D act">
+  <img src="https://img.shields.io/badge/resumes-2x%20cleaner-111111?style=flat-square" alt="2x cleaner resumes">
+  <img src="https://img.shields.io/badge/license-MIT-111111?style=flat-square" alt="MIT license">
+</p>
+
+<p align="center">
+  <img src="assets/gamepad.png" width="880" alt="TLGF: Messy AI chat to back in flow. Control it like a gamepad. Type $tlgf to get 3 short blocks. Press 1-4 to check state, or A-D to act.">
+</p>
+
+<p align="center">
+  <strong>Messy AI chat &rarr; back in flow. Type <code>$tlgf</code>. Get 3 short blocks. Press one key to move.</strong><br>
+  <strong>2&times; more clean resumes (34/45 vs 17/45) &middot; 15/15 on Claude Code &middot; up to &minus;71% less reading</strong><br>
+  <sub>Paired benchmark across Claude Code (<code>claude-opus-5</code>), Agy (<code>gemini-3.7-flash-high</code>), and Codex CLI (<code>gpt-5.6-sol</code>). <a href="#numbers">Details</a>.</sub>
+</p>
 
 ---
 
-## Why use this
+When you run several AI tabs at once, coming back to an older chat usually means scrolling through screens of tool logs just to find what's stuck.
 
-When you run several AI sessions in parallel, returning to an older tab usually means scrolling through screens of tool logs, replayed history, and buried status updates.
+**TLGF** replaces that wall of text with the same 3-block frame every time:
 
-**TLGF** replaces that wall of text with a compact, predictable 3-block frame:
+- **You are here** — project, thread, and current step in one line.
+- **What's happening now (`1–4`)** — what's done, what's running, what's blocked.
+- **Suggested next steps (`A–D`)** — concrete options, recommended one first.
 
-- **Where you are** — A semantic breadcrumb of the exact project, workstream, and stage.
-- **What's happening now (`1, 2, 3`)** — Numbered points showing what just finished, what is running, and what is blocked.
-- **Suggested next steps (`A, B, C`)** — Lettered decisions and forward actions, with the recommended choice listed first.
+**Numbers inspect state. Letters act.**
 
-> **Numbers = current state.** **Letters = decisions and next actions.**
+---
 
-### What it looks like
+## Before / After
+
+<p align="center">
+  <img src="assets/beforeafter.png" width="880" alt="Before and after comparison: 450-word rambling summary without TLGF versus 57-word 3-block TLGF frame with 1-key action A.">
+</p>
+
+<details>
+<summary>Copyable text version</summary>
 
 <pre>
-<b>you &gt;</b> <ins><b>How's the Stripe webhook integration going? $tlgf</b></ins>
+<b>you &gt;</b> <ins><b>How's the Stripe webhook going? $tlgf</b></ins>
 
-<b>You are here:</b> Billing › Stripe webhooks › signature verification
+<b>You are here:</b> Billing › Stripe webhooks › signatures
 ────────────────────────────────────────────────────────────
 <b>What's happening now:</b>
-1. Webhook handler and retry logic are implemented in <code>src/billing/webhooks.ts</code>.
-2. Local test suite passes (14/14), except the replay-protection test which is failing on timestamp drift.
-3. Staging webhook secret is still missing from <code>.env.staging</code>.
+1. Handler and retry logic are done in <code>src/billing/webhooks.ts</code>.
+2. Replay-protection test fails on timestamp drift (14/15 pass).
+3. Staging webhook secret is still missing in <code>.env.staging</code>.
 ────────────────────────────────────────────────────────────
 <b>Suggested next steps:</b>
-A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run the suite (recommended).
+A. Fix the timestamp drift check in <code>webhooks.ts</code> and re-run tests (recommended).
 B. Skip local replay tests for now and add the staging secret first.
 ────────────────────────────────────────────────────────────
 <b>you &gt;</b> <ins><b>A</b></ins>
 </pre>
 
-From there, typing <b><code>A</code></b> immediately kicks off the recommended fix.
+</details>
+
+Typing **`A`** runs the recommended fix directly—no repeating context, no replaying the frame.
 
 ---
 
-## Frame controls
+## Controls
 
-Reference items from the latest frame by number or letter without repeating context (**numbers = status, letters = decisions**):
+Use the latest frame like a gamepad (**`1–4` = check state**, **`A–D` = run next step**):
 
-| You write | TLGF does |
+| You type | TLGF does |
 | :--- | :--- |
 | `2` or `expand 2` | Expands only status point 2. |
-| `B` or `do B` | Selects or runs action B (when safe and authorized). |
-| `B vs C` | Compares only the key differences between options B and C. |
-| `park 4` | Saves point 4 as an inactive lead with its evidence and a revisit condition. |
-| `fork 3` | Switches the active workstream to point 3 and leaves a resume cue for the current one. |
-| `deep dive 2` | Investigates point 2 while keeping a path back to the main thread. |
-| `refresh` | Rebuilds the frame from current evidence. |
+| `B` or `do B` | Picks or runs step B (when safe and allowed). |
+| `B vs C` | Compares only the real difference between B and C. |
+| `park 4` | Saves point 4 as an inactive lead with evidence and when to revisit it. |
+| `fork 3` | Switches active work to point 3 and leaves a resume note for the current thread. |
+| `deep dive 2` | Investigates point 2 while keeping a clear path back. |
+| `refresh` | Rebuilds the frame from current files and logs. |
 
-*Natural phrasing in your own language works the same way. If there is no active frame yet, TLGF builds one instead of guessing.*
+*Natural phrasing in any language works the same way. If there is no frame yet, TLGF builds one instead of guessing.*
 
-When work is blocked on something only you can provide—a decision, credentials, a secret, or external info—the frame starts with **⛔ Needs you**. Otherwise, that banner is omitted so it stays meaningful across multiple open tabs.
+When the agent literally cannot continue without you—a decision, secret, approval, or missing info—the frame starts with **⛔ Needs you**. Otherwise that banner stays hidden so it actually means something across open tabs.
 
 ---
 
-## Installation
+## Numbers
 
-Install TLGF globally across your projects using the open-source [`skills` CLI](https://github.com/vercel-labs/skills):
+<p align="center">
+  <img src="assets/benchmark-gates.png" width="880" alt="Paired benchmark across 3 agents: TLGF passes 34/45 (76%) vs 17/45 (38%) control. Claude Code 15/15 vs 5/15, Agy 10/15 vs 7/15, Codex CLI 9/15 vs 5/15.">
+</p>
+
+<p align="center">
+  <img src="assets/benchmark-impact.png" width="880" alt="Fact coverage and word reduction: 94-95% expected facts kept vs 77-84% control; up to -71% fewer words on Claude Code 1-key follow-ups.">
+</p>
+
+Full method, fixtures, and raw judge scores are in [`TLGF_BENCHMARK.md`](TLGF_BENCHMARK.md):
+
+- **2× more clean resumes:** 34/45 (76%) with TLGF vs 17/45 (38%) without it across 90 paired runs. On Claude Code, TLGF nailed 15/15 messy resumes (vs 5/15 without) while cutting response length by 13–71% on 4 of 5 cases.
+- **Why agents break without it:** When you jump back into an old thread, default agents fail 62% of the time—replaying the whole status on a 1-letter `B`, missing stale saved state or hidden retries, and burying blockers.
+- **Less reading, almost nothing missed:** Blind judges scored TLGF at 94–95% of critical facts kept (vs 77–84% without), with higher scores on knowing where you are (1.89–1.94/2) and what to do next (1.74–1.80/2).
+
+---
+
+## Install
+
+Install globally using the open-source [`skills` CLI](https://github.com/vercel-labs/skills):
 
 ```shell
 npx skills@latest add https://github.com/alexfafula/skill-tlgf-too-long-give-me-flow/tree/main/tlgf -g -y -a <agent>
@@ -78,11 +124,9 @@ npx skills@latest add https://github.com/alexfafula/skill-tlgf-too-long-give-me-
 | **Cline** | `-a cline` |
 | **OpenCode** | `-a opencode` |
 
-*Supports any agent compatible with the [Agent Skills specification](https://agentskills.io).*
+*Works with any agent supporting the [Agent Skills specification](https://agentskills.io).*
 
 ### Try without installing
-
-Run a single session with TLGF loaded in memory:
 
 ```shell
 # Claude Code
@@ -100,9 +144,9 @@ npx skills@latest update tlgf
 
 ---
 
-## Usage examples
+## Usage
 
-Add `TLGF` anywhere in your prompt (or `$tlgf` in agents that support skill tags):
+Add `TLGF` anywhere in your prompt (or `$tlgf` where skill tags are supported):
 
 ```text
 # Instant status & next steps
@@ -120,82 +164,73 @@ gdzie jesteśmy? $tlgf
 
 ---
 
-## What TLGF enforces
+## What it enforces
 
-- **Single focus:** Only one active thread stays visible; parked work appears only when it affects the current path.
-- **Context with results:** Metrics and findings stay tied to the conditions needed to read them (run ID, model, retry state, or data limits).
-- **No hidden retries:** If a task needed a retry to pass, report the retry—don't hide the initial failure.
-- **Real progress:** Work is described as running only while it's actually running. Progress uses real counts or named milestones, never manufactured percentages.
-- **Portable paths:** Local artifacts use repository-relative paths, never `file://` URLs.
-- **No meta-chatter:** Replies never echo the `TLGF` trigger or explain how the skill works.
+- **One thread at a time:** Only the active work stays visible; parked work shows up only if it affects the current path.
+- **Numbers stay attached to context:** Results keep their run ID, model, retry state, or data limits.
+- **No hidden retries:** If a task needed a retry to pass, say so—don't hide the first failure.
+- **Real progress only:** Work is "running" only while it's actually running. Use real counts or milestones, never fake percentages.
+- **Portable paths:** Local files use repo-relative paths, never `file://` links.
+- **No meta-chatter:** Replies never echo `TLGF` or explain how the skill works.
 
 ---
 
 ## Keep state between sessions
 
-When project writes are authorized, TLGF maintains a lightweight restart index in `.tlgf/STATE.md` tracking the situation, current state, resume action, decisions, and parked leads. On resume, it checks that file against the current branch, artifacts, and results before trusting it. Secrets, private chat, and raw logs are never written there.
+When file writes are allowed, TLGF keeps a tiny restart index in `.tlgf/STATE.md` (current position, state, resume step, decisions, parked leads). On resume, it checks that file against your actual branch, files, and results before trusting it. Secrets, raw logs, and private chat are never saved there.
 
 ---
 
-## Use TLGF without skill triggering
+## Use without skill triggering
 
-If your host doesn't support automatic skill discovery, two adapters apply the exact same contract:
+If your tool doesn't load skills automatically, two adapters apply the exact same rules:
 
-- **Claude Code output style:** Copy `adapters/claude/output-styles/tlgf.md` to `~/.claude/output-styles/` (or a project's `.claude/output-styles/`), then run `/output-style TLGF` or set `"outputStyle": "TLGF"` in `settings.json`.
-- **`AGENTS.md` block:** Paste `adapters/agents/tlgf.md` into your `AGENTS.md` (or equivalent persistent instruction file).
+- **Claude Code output style:** Copy `adapters/claude/output-styles/tlgf.md` to `~/.claude/output-styles/` (or `.claude/output-styles/`), then run `/output-style TLGF` or set `"outputStyle": "TLGF"` in `settings.json`.
+- **`AGENTS.md` block:** Paste `adapters/agents/tlgf.md` into your `AGENTS.md` (or equivalent rules file).
 
 ---
 
-## Architecture & Verification
+## Repo layout & local check
 
 ```text
 skill-tlgf-too-long-give-me-flow/
 ├── tlgf/
-│   ├── SKILL.md                 Triptych contract, Addressable Flow rules, continuity gates
+│   ├── SKILL.md                 Core 3-block contract, gamepad controls, continuity rules
 │   ├── agents/openai.yaml       Display metadata and default invocation
 │   ├── references/
-│   │   ├── addressable-flow.md  Resolving numbered and lettered references
+│   │   ├── addressable-flow.md  Resolving 1-4 and A-D references
 │   │   ├── continuity.md        Park, resume, switch, triage, and signal routing
 │   │   └── lineage.md           The .tlgf/STATE.md restart index
 │   ├── evals/cases.json         12 behavior-evaluation cases
-│   ├── scripts/check.py         Deterministic package validator
-│   └── LICENSE.txt              License included with installed copies
+│   ├── scripts/check.py         Package validator
+│   └── LICENSE.txt              License shipped with installed copies
 ├── adapters/                    Claude Code output style and AGENTS.md block
-├── benchmarks/                  Paired control-versus-TLGF benchmark, judge, and reports
+├── assets/                      README visuals (gamepad, before/after, benchmarks)
+├── benchmarks/                  Paired control-vs-TLGF harness, judge, and reports
 ├── docs/                        Product contract and forward tests
-├── TLGF_BENCHMARK.md            Benchmark method and results
+├── TLGF_BENCHMARK.md            Benchmark method and full results
 ├── CHANGELOG.md                 Version history
-├── LICENSE                      Repository license
 └── README.md                    This guide
 ```
 
-### Validate local package
+Validate the local skill package:
 
 ```shell
 python3 tlgf/scripts/check.py
 ```
 
 Expected output:
+
 ```text
 TLGF valid: triptych contract, 12 eval cases
 ```
 
 ---
 
-## Benchmark
-
-[`TLGF_BENCHMARK.md`](TLGF_BENCHMARK.md) details the paired benchmark across Claude Code (Fable 5.2, Opus 5.5), Codex (GPT-5.6-Terra), and Agy (Gemini 3.8 Flash):
-
-- **Deterministic gates:** TLGF passed the gates 34/45 times versus 17/45 for the control group. Claude passed all 15 TLGF gates while cutting response length by 13% to 71% compared to control answers.
-- **Control failures:** Without TLGF, models frequently replayed the whole frame on `B`, omitted revisit conditions on `park`, missed stale-state conflicts or retry costs behind recovered passes, and left preliminary signals out of status.
-- **Fact coverage & orientation:** Model judges rated TLGF significantly higher on orientation, actionability, completeness, and fact coverage (94–95% of expected facts vs. 77–84% for control).
-
----
-
-## License & Attribution
+## License
 
 Created by [Aleksander Fafuła](mailto:aleksander@fafula.com).  
-Available under the [MIT License](LICENSE).
+MIT License — see [LICENSE](LICENSE).
 
 > [!NOTE]
-> TLGF is an independent open-source project by one developer, not affiliated with any AI vendor.
+> Independent open-source project by one developer, not affiliated with any AI vendor.
