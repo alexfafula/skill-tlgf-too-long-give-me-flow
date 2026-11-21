@@ -41,7 +41,7 @@ From there, typing <b><code>A</code></b> immediately kicks off the recommended f
 
 ## Frame controls
 
-Reference items from the latest frame by number or letter without repeating context (numbers = status, letters = decisions):
+Reference items from the latest frame by number or letter without repeating context (**numbers = status, letters = decisions**):
 
 | You write | TLGF does |
 | :--- | :--- |
